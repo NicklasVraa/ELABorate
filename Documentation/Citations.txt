@@ -1,0 +1,5 @@
+Modified Nodal analysis:
+  Chung-Wen Ho, A. Ruehli and P. Brennan,
+  "The modified nodal approach to network analysis,"
+  in IEEE Transactions on Circuits and Systems, vol. 22, no. 6, pp. 504-509,
+  June 1975, doi: 10.1109/TCS.1975.1084079.
