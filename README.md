@@ -1,6 +1,8 @@
 # **ELABorate**  <!-- omit in toc -->
 A **Circuit Analysis Tool** capable of **pure symbolic analysis**, as well as partial or complete **numerical evaluation**. Written and run in **MATLAB**.
 
+[**Download**](https://github.com/NicklasVraa/ELABorate/raw/master/ELABorate.mltbx)
+
 ---
 
 ### **Table of Contents** <!-- omit in toc -->
@@ -16,7 +18,7 @@ A **Circuit Analysis Tool** capable of **pure symbolic analysis**, as well as pa
 ELABorate only needs a circuit **netlist** to create a model of the circuit. This **circuit-object** can be transmuted, analyzed and its functionality visualized. The program is implemented in an object-oriented fashion for modularity and extendability.
 
 **The program will be available in 4 versions:**
-- A **Matlab package**, intended to be used with Matlab Live Scripts.\
+- A **Matlab Toolbox**, intended to be used with Matlab Live Scripts.\
   (Beta, ready for use)
 
 - A **Matlab Application**, with a GUI.\
@@ -65,18 +67,14 @@ ELABorate only needs a circuit **netlist** to create a model of the circuit. Thi
 ---
 
 ### **Project Plans**
-
-**Matlab Package**
-- Add class-tree to documentation.
-- Function for validating netlist input.
-- Adding support for non-linear elements by modelling as linear sub-circuits.
+- Supporting non-linear elements. **(WIP)**
+- Built-in validation/debugging of netlist input.
 - Finding circuit stability factors.
-- Thevenin and norton equivalent circuit.
-- Domain conversion function.
-- Identify sub-circuit patterns, such as various amplifier configurations.
+- Thevenin/Norton equivalent circuit.
+- Identify sub-circuit patterns, such as amplifiers.
 - Stringing sub-circuits together.
-- Drawing circuit.
-- Extract netlist from image, using computer vision.
+- Drawing circuits from netlists.
+- Extracting netlist from image, using computer vision.
 
 *(In order of priority)*
 
@@ -88,16 +86,13 @@ Obtain a netlist. A netlist describes a circuit in the simplest way possible, as
 from all types of SPICE-software. Read up on [Netlists](https://www.cpp.edu/~prnelson/courses/ece220/220-spice-notes.pdf), if in doubt.
 
 **Step 2** -
-Load ELABorate into your MATLAB environment of choice, using whatever method, you prefer. You can also just add the program directory to the matlab path. Read up on [adding paths](https://se.mathworks.com/help/matlab/ref/addpath.html) to MATLAB, if in doubt.
-
-**Step 3** -
 Create a circuit object from your netlist file by calling the `Circuit` class constructor. The only input is the path to the file.
 
 ```matlab
 myCircuit = Circuit('path-to-file.txt');
 ```
 
-**Step 4** -
+**Step 3** -
 You are now ready to do analysis on the circuit. At any point, use the `status` method, to see what has been - and what may be done with your circuit object. Read the [manual](/Documentation/Manual.md), for a complete overview of all the program's features.
 
 ```matlab
