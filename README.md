@@ -116,3 +116,4 @@ myCircuit.symbolic_node_voltages
 ---
 
 ### **Examples**
+![Screenshot](/Documentation/Screenshot.png)
