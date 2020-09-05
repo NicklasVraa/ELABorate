@@ -1,0 +1,5 @@
+Is1 0 1 Symbolic
+Vs1 1 2 Symbolic
+R1 1 0 1000
+R2 1 2 2000
+R3 2 0 2000
