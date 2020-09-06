@@ -15,7 +15,7 @@ A **Circuit Analysis Tool** capable of **pure symbolic analysis**, as well as pa
 ---
 
 ## **Description**
-ELABorate only needs a circuit **netlist** to create a model of the circuit. This **circuit-object** can be transmuted, analyzed and its functionality visualized. The program is implemented in an object-oriented fashion for modularity and extendability.
+ELABorate only needs a circuit **netlist** to create a **circuit-object**. This object can be transmuted, analyzed and its behaviour visualized. The program is implemented in an object-oriented fashion for modularity and extendability.
 
 **The program will be available in 4 versions:**
 - A **Matlab Toolbox**, intended to be used with Matlab Live Scripts.\
@@ -73,6 +73,7 @@ ELABorate only needs a circuit **netlist** to create a model of the circuit. Thi
 - Thevenin/Norton equivalent circuit.
 - Identify sub-circuit patterns, such as amplifiers.
 - Stringing sub-circuits together.
+- Output circuit netlist, based on desired circuit behaviour.
 - Drawing circuits from netlists.
 - Extracting netlist from image, using computer vision.
 
@@ -83,7 +84,7 @@ ELABorate only needs a circuit **netlist** to create a model of the circuit. Thi
 ## **Using the Matlab Package**
 **Step 1** -
 Obtain a netlist. A netlist describes a circuit in the simplest way possible, as a text file, where each line is an element of the circuit. The netlist is easily written by hand, but is also obtainable
-from all types of SPICE-software. Read up on [Netlists](https://www.cpp.edu/~prnelson/courses/ece220/220-spice-notes.pdf), if in doubt.
+from all types of SPICE-software. Read up on [netlists](https://www.cpp.edu/~prnelson/courses/ece220/220-spice-notes.pdf), if in doubt. The netlist used by ELABorate are "SPICE-like". See [examples](/Examples/Circuits) of valid netlists.
 
 **Step 2** -
 Create a circuit object from your netlist file by calling the `Circuit` class constructor. The only input is the path to the file.
