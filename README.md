@@ -117,4 +117,12 @@ myCircuit.symbolic_node_voltages
 ---
 
 ### **Examples**
-![Screenshot](/Documentation/Screenshot.png)
+Calculating transfer function of a circuit.
+
+![Screenshot](/Documentation/Screenshot1.png)
+
+Simplifying a circuit.
+
+![Screenshot](/Documentation/Screenshot2.png)
+
+All rights reserved, Nicklas Vraa.
