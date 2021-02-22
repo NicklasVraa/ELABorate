@@ -1,5 +1,5 @@
 # **ELABorate**  <!-- omit in toc -->
-A **Circuit Analysis Tool** capable of **pure symbolic analysis**, as well as partial or complete **numerical evaluation**. Written and run in **MATLAB**.
+A **Circuit Analysis Tool** capable of **pure symbolic analysis**, as well as partial or complete **numerical evaluation**. Written and run in **MATLAB**. ELABorate is geared towards circuit analysis and design, but has applications for any general system analysis, such as controller design.
 
 [**Download**](https://github.com/NicklasVraa/ELABorate/raw/master/ELABorate.mltbx)
 
@@ -8,7 +8,6 @@ A **Circuit Analysis Tool** capable of **pure symbolic analysis**, as well as pa
 ### **Table of Contents** <!-- omit in toc -->
 - [**Description**](#description)
   - [**Features**](#features)
-  - [**Project Plans**](#project-plans)
 - [**Using the Matlab Package**](#using-the-matlab-package)
   - [**Examples**](#examples)
 
@@ -37,9 +36,10 @@ ELABorate only needs a circuit **netlist** to create a **circuit-object**. This 
 ---
 
 ### **Features**
-**For circuits containing...**
-- Independent voltage/current sources.
-- Dependent voltage/current sources.
+This overview is split into features that only apply to electrical circuits (1), and features pertaining to system analysis and design in general (2).
+
+**(1) For circuits containing...**
+- Independent and/or dependent voltage/current sources.
 - Resistors, capacitors and inductors.
 - Ideal operational amplifiers.
 
@@ -59,25 +59,16 @@ ELABorate only needs a circuit **netlist** to create a **circuit-object**. This 
   - Finding symbolic/numerical transfer function.
   - Converting transfer function to alternate forms.
 - Visualize circuit behavior, by plotting...
-  - Step-response.
+  - Step- and impulse-response.
   - Pole-zero diagram.
   - Bode diagram (amplitude and phase).
   - Nyquist diagram.
 
----
-
-### **Project Plans**
-- Supporting non-linear elements. **(WIP)**
-- Built-in validation/debugging of netlist input.
-- Finding circuit stability factors.
-- Thevenin/Norton equivalent circuit.
-- Identify sub-circuit patterns, such as amplifiers.
-- Stringing sub-circuits together.
-- Output circuit netlist, based on desired circuit behaviour.
-- Drawing circuits from netlists.
-- Extracting netlist from image, using computer vision.
-
-*(In order of priority)*
+**(2) For systems, the program...**
+- Can create a system object from...
+  - Differential equations and initial conditions.
+  - Transfer function.
+  - State-space.
 
 ---
 
