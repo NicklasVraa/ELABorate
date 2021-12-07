@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="2043435977" file="C:\Users\nkvra\Google Drive\Documents\MATLAB\ELABorate\ELABorate.prj" location="C:\Users\nkvra\Google Drive\Documents\MATLAB\ELABorate" name="ELABorate" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="2043435977" file="C:\Users\nkvra\Google_Drive\Documents\Projects\ELABorate\interface\ELABorate.prj" location="C:\Users\nkvra\Google_Drive\Documents\Projects\ELABorate\interface" name="ELABorate" target="target.mlapps" target-name="Package App">
     <param.appname>ELABorate</param.appname>
     <param.authnamewatermark>Nicklas Vraa</param.authnamewatermark>
     <param.email>nkvraa@gmail.com</param.email>
@@ -12,7 +12,7 @@
     </param.icons>
     <param.summary>Symbolic circuit analysis tool, with partial and complete numerical evaluation.</param.summary>
     <param.description>The GUI-version of ELABorate.m. A circuit analysis tool capable of pure symbolic analysis, as well as optional numerical evaluation. The program takes a netlist as an input, sets up circuit equations and solves them. The output is a circuit-object containing everything you need to understand the circuit. The program is implemented in an object-oriented fashion for modularity and extendability.</param.description>
-    <param.screenshot>${PROJECT_ROOT}\Distribution\Screenshot.png</param.screenshot>
+    <param.screenshot />
     <param.version>1.0</param.version>
     <param.products.name>
       <item>MATLAB</item>
@@ -30,12 +30,14 @@
       <item>8.5</item>
     </param.products.version>
     <param.platforms />
-    <param.output>${PROJECT_ROOT}\Distribution</param.output>
+    <param.output>${PROJECT_ROOT}</param.output>
     <param.guid>0b4d77ad-0514-4f1b-85a4-0102d3c7062e</param.guid>
     <unset>
       <param.company />
+      <param.screenshot />
       <param.version />
       <param.platforms />
+      <param.output />
     </unset>
     <fileset.main>
       <file>${PROJECT_ROOT}\ELABorate.mlapp</file>
@@ -56,12 +58,31 @@
     <fileset.resources />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="Distribution" optional="false">C:\Users\nkvra\Google Drive\Documents\MATLAB\ELABorate\Distribution</file>
+      <file location="C:\Users\nkvra\Google_Drive\Documents\Projects\ELABorate" name="interface" optional="false">C:\Users\nkvra\Google_Drive\Documents\Projects\ELABorate\interface</file>
     </build-deliverables>
     <workflow />
     <matlab>
       <root>C:\Program Files\MATLAB\R2020a</root>
-      <toolboxes />
+      <toolboxes>
+        <toolbox name="matlabcoder" />
+        <toolbox name="fixedpoint" />
+        <toolbox name="matlabhdlcoder" />
+      </toolboxes>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
     </matlab>
     <platform>
       <unix>false</unix>

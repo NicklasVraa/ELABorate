@@ -1,7 +1,7 @@
 # **ELABorate**
-ELABorate is a Circuit Analysis Tool capable of pure symbolic analysis, as well as partial or complete numerical evaluation. Written and run in MATLAB. ELABorate is geared towards circuit analysis and design, but has applications for any general system analysis, such as controller design.
+ELABorate is a circuit analysis tool capable of pure symbolic analysis, as well as partial or complete numerical evaluation. Currently written and run in MATLAB. ELABorate is geared towards circuit analysis and design, but has applications for any general system analysis, such as controller design.
 
-The plan is to either move to a standalone application, if/when MATLAB coder gains support for the symbolic math toolbox, or move to Python and the Sympy library.
+The plan is to either move to a standalone application, when MATLAB coder gains support for the symbolic math toolbox, or move to Python and the SymPy library.
 
 See the [Wiki](https://github.com/NicklasVraa/ELABorate/wiki/1.-Introduction) for a full run-down of the program.
 
