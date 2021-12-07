@@ -1,0 +1,82 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="2043435977" file="C:\Users\nkvra\Google Drive\Documents\MATLAB\ELABorate\ELABorate.prj" location="C:\Users\nkvra\Google Drive\Documents\MATLAB\ELABorate" name="ELABorate" target="target.mlapps" target-name="Package App">
+    <param.appname>ELABorate</param.appname>
+    <param.authnamewatermark>Nicklas Vraa</param.authnamewatermark>
+    <param.email>nkvraa@gmail.com</param.email>
+    <param.company />
+    <param.icon>${PROJECT_ROOT}\ELABorate_resources\icon_24.png</param.icon>
+    <param.icons>
+      <file>${PROJECT_ROOT}\ELABorate_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\ELABorate_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\ELABorate_resources\icon_16.png</file>
+    </param.icons>
+    <param.summary>Symbolic circuit analysis tool, with partial and complete numerical evaluation.</param.summary>
+    <param.description>The GUI-version of ELABorate.m. A circuit analysis tool capable of pure symbolic analysis, as well as optional numerical evaluation. The program takes a netlist as an input, sets up circuit equations and solves them. The output is a circuit-object containing everything you need to understand the circuit. The program is implemented in an object-oriented fashion for modularity and extendability.</param.description>
+    <param.screenshot>${PROJECT_ROOT}\Distribution\Screenshot.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name>
+      <item>MATLAB</item>
+      <item>Control System Toolbox</item>
+      <item>Symbolic Math Toolbox</item>
+    </param.products.name>
+    <param.products.id>
+      <item>1</item>
+      <item>3</item>
+      <item>15</item>
+    </param.products.id>
+    <param.products.version>
+      <item>9.8</item>
+      <item>10.8</item>
+      <item>8.5</item>
+    </param.products.version>
+    <param.platforms />
+    <param.output>${PROJECT_ROOT}\Distribution</param.output>
+    <param.guid>0b4d77ad-0514-4f1b-85a4-0102d3c7062e</param.guid>
+    <unset>
+      <param.company />
+      <param.version />
+      <param.platforms />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\ELABorate.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\Capacitor.m</file>
+      <file>${PROJECT_ROOT}\CCCS.m</file>
+      <file>${PROJECT_ROOT}\CCVS.m</file>
+      <file>${PROJECT_ROOT}\Circuit.m</file>
+      <file>${PROJECT_ROOT}\Indep_i_source.m</file>
+      <file>${PROJECT_ROOT}\Indep_v_source.m</file>
+      <file>${PROJECT_ROOT}\Inductor.m</file>
+      <file>${PROJECT_ROOT}\Op_amp.m</file>
+      <file>${PROJECT_ROOT}\Resistor.m</file>
+      <file>${PROJECT_ROOT}\VCCS.m</file>
+      <file>${PROJECT_ROOT}\VCVS.m</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}" name="Distribution" optional="false">C:\Users\nkvra\Google Drive\Documents\MATLAB\ELABorate\Distribution</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2020a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
