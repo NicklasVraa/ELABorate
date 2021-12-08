@@ -1,4 +1,0 @@
-Vin 1 0 AC
-VDD 2 0 DC
-RD 2 3
-M1 1 3 0 100

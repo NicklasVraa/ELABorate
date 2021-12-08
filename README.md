@@ -34,7 +34,11 @@ Give the program a netlist, and it will return the circuit equations. These equa
 
 ### **Examples**
 Below are links to handful of printouts of MATLAB livescripts, that showcase some of the features of ELABorate, as it currently is.
-- [Basic Circuit Analysis](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/circuit_analysis.pdf)
-- [Simplifying circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/simplify_circuit.pdf)
-- [Mosfet amplifier modelling](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/circuit_analysis.pdf)
-- [Transmuting systems](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/simplify_circuit.pdf)
+- [Circuit analysis intro](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s0_circuit_analysis_intro.pdf)
+- [Voltage divider](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s1_voltage_divider.pdf)
+- [RC circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s2_rc_circuits.pdf)
+- [RL circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s3_rl_circuits.pdf)
+- [RLC circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s4_rlc_circuits.pdf)
+- [Simplifying circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/c5_circuit_simplification.pdf)
+- [Mosfet amplifier](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/c6_mosfet_amps.pdf)
+- [Transmuting systems](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/transmuting_systems.pdf)
