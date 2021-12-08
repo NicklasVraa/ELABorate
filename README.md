@@ -18,10 +18,12 @@ Give the program a netlist, and it will return the circuit equations. These equa
 - Built-in validation/debugging of netlist inputs.
 - Function for converting given circuit into Thevenin/Norton equivalent circuits.
 - Function for converting given circuit to AC/DC equivalents.
+- Add automatic calculation of input and output impedances to symbolic analysis.
 - Function for cleaning circuit netlists, by removing redundancies like open or shorts.
 - Add support for non-linear components, like diodes, MOSFETs, BJTs using different models like small-signal, etc.
 - Add support for larger structures like ideal-opamps, basic common amplifiers.
 - Add support for transformers.
+- Make it possible to add assumptions to the analysis to reduce the complexity of output equations, when the circuit has many elements.
 - Subcircuit functionality, where you can package a netlist as a single component to be used in other netlists.
 - Function for finding circuit stability factors.
 - Transfer-function-to-circuit functionality where you define a transfer function and get a netlist in return.
