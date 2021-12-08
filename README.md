@@ -39,6 +39,6 @@ Below are links to handful of printouts of MATLAB livescripts, that showcase som
 - [RC circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s2_rc_circuits.pdf)
 - [RL circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s3_rl_circuits.pdf)
 - [RLC circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s4_rlc_circuits.pdf)
-- [Simplifying circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/c5_circuit_simplification.pdf)
-- [Mosfet amplifier](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/c6_mosfet_amps.pdf)
+- [Simplifying circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s5_circuit_simplification.pdf)
+- [Mosfet amplifier](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s6_mosfet_amps.pdf)
 - [Transmuting systems](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/transmuting_systems.pdf)
