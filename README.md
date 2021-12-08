@@ -5,7 +5,7 @@ The plan is to either move to a standalone application, when MATLAB coder gains 
 
 See the [Wiki](https://github.com/NicklasVraa/ELABorate/wiki/) for a full run-down of the program.
 
-[**Download**](https://github.com/NicklasVraa/ELABorate/dist/raw/master/ELABorate.mltbx)
+[**Download**](https://github.com/NicklasVraa/ELABorate/raw/master/dist/ELABorate.mltbx)
 
 
 ### **How is it different?**
