@@ -15,7 +15,14 @@ Contrary to other circuit analysis software, like all SPICE-based programs, ELAB
 Give the program a netlist, and it will return the circuit equations. These equations can be used to find any voltage or current in the circuit, which the program can also do for you, automatically. To here, to see a list of all the [features](https://github.com/NicklasVraa/ELABorate/wiki/2.-Overview-of-Features).
 
 ### **Future plans**
-I have begun work on supporting non-linear components like MOSFETs and BJTs, which looks promising. I also plan to implement transfer-function-to-circuit functionality, which would make it possible to automate the process of designing circuits, given a symbolic transfer function. I plan to make use of Matlab's computer vision library to make it possible to simply take a picture of a circuit and convert it to a netlist that the program can then analyze.
+- Function for converting given circuit into Thevenin/Norton equivalent circuits.
+- Function for converting given circuit to AC/DC equivalents.
+- Function for cleaning circuit netlists, by removing redundancies like open or shorts.
+- Supporting non-linear components, like diodes, MOSFETs, BJTs using different models like small-signal, etc.
+- Supporting larger structures like ideal-opamps, basic common amplifiers.
+- Subcircuit functionality, where you can package a netlist as a single component to be used in other netlists.
+- Transfer-function-to-circuit functionality where you define a transfer function and get a netlist in return.
+- (Maybe) Image-to-netlist function, using Matlab's computer-vision library.
 
 ---
 

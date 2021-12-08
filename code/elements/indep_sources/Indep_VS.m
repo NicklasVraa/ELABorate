@@ -20,7 +20,7 @@ classdef Indep_VS < Indep_S
             elseif strcmpi(type, 'DC')
                 obj.is_AC = 0;
             else
-                error("Invalid type. Use 'AC' or 'DC'.\n");
+                error("Invalid type. Use 'AC' or 'DC'.");
             end
             
             if isempty(voltage)
