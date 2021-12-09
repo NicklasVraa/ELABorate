@@ -3,7 +3,7 @@ ELABorate is a circuit analysis tool capable of pure symbolic analysis, as well 
 
 The plan is to either move to a standalone application, when MATLAB coder gains support for the symbolic math toolbox, or move to Python and the SymPy library.
 
-See the [Wiki](https://github.com/NicklasVraa/ELABorate/wiki/) for a full run-down of the program.
+See the [Wiki](https://github.com/NicklasVraa/ELABorate/wiki/) for a full run-down of the program. For now, the code itself is kept locally.
 
 [**Download**](https://github.com/NicklasVraa/ELABorate/raw/master/dist/ELABorate.mltbx)
 
