@@ -29,11 +29,13 @@ Bachelor's Project, Nicklas Vraa
 - Step- and impulse-response. ✓
 - A symbolic Routh-Hurwitz array. ✓
 - Pole-zero diagram. ✓
-- Add separate loop for H and F after the others.
-- Double-check dependent sources, especially VCCS.
 - Non-linear elements: MOSFETs, BJTs.
 - Arbitrary sub-circuit models.
 - Transformers.
 - Input- and output resistances.
 - Thevenin/Norton equivalent output.
 - Assumptions.
+
+### Debugging
+- Add separate loop for H and F after the others. ✓
+- Double-check dependent sources, especially VCCS. ✓
