@@ -3,9 +3,8 @@ Bachelor's Project, Nicklas Vraa
 
 **Immediate todo-list:**
 - Write section on netlist input.
-- Non-linear elements: MOSFETs, BJTs.
+- Write section on non-linear element modelling.
+- Create figure explaining implementation of SSM.
 - Implement assumptions and subsequent simplification.
-- Arbitrary sub-circuit models.
-- Transformers.
 - Input- and output resistances.
 - Thevenin/Norton equivalent output.
