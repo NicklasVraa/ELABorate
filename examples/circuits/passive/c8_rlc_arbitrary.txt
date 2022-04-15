@@ -1,6 +1,6 @@
-Vcc 3 0 DC
+Vcc 3 0 DC 1
 R2 3 2 1000
 R1 1 0 1000
 C1 4 0 1E-6
 C2 2 4 10E-6
-Vs 4 1 AC 0
+Vs 4 1 AC 1
