@@ -1,6 +1,5 @@
 # Plan
 Report:
-- "The Circuit Class", how short- and open-circuiting is implemented. ✓
 - "The ELAB class", the four subclasses, recursive simplification implementation.
 - "Results" section introduction.
 
