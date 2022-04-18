@@ -1,18 +1,16 @@
 # **ELABorate**
-ELABorate is a circuit analysis tool capable of pure symbolic analysis, as well as partial or complete numerical evaluation. Currently written and run in MATLAB. ELABorate is geared towards circuit analysis and design, but has applications for any general system analysis, such as controller design.
+ELABorate is a circuit analysis tool capable of pure symbolic analysis, as well as partial or complete numerical evaluation. Currently written and run in MATLAB. ELABorate is geared towards circuit analysis and design, but has applications for any general system analysis, such as controller design. The plan is to either move to a standalone application, when MATLAB coder gains support for the symbolic math toolbox, or move to Python and the SymPy library.
 
-The plan is to either move to a standalone application, when MATLAB coder gains support for the symbolic math toolbox, or move to Python and the SymPy library.
+See the [Wiki](https://github.com/NicklasVraa/ELABorate/wiki/) for a run-down of the program's features, or check out my [bachelor's thesis]() for the full
 
-See the [Wiki](https://github.com/NicklasVraa/ELABorate/wiki/) for a full run-down of the program.
-
-[**Download**](https://github.com/NicklasVraa/ELABorate/raw/master/dist/ELABorate.mltbx)
+[**Download**](https://github.com/NicklasVraa/ELABorate/raw/master/builds/ELABorate.mltbx)
 
 
 ### **How is it different?**
-Contrary to other circuit analysis software, like all SPICE-based programs, ELABorate does not need numerical values, and will tell you how a circuit behaves for ANY numerical value, by returning circuit equations, rather than a number. Doing symbolic calculations allow for much broader understanding of a circuit. A couple of 'symbolic-spice' [programs](https://www.egr.msu.edu/~wierzba/index_Page533.htm) have been emerging very recently, but all are in the demo stage and none seem that usable.
+Contrary to other circuit analysis software, like all SPICE-based programs, ELABorate does not need numerical values, and will tell you how a circuit behaves for ANY numerical value, by returning circuit equations, rather than a number. Doing symbolic calculations allow for much broader understanding of a circuit. A couple of 'symbolic-spice' programs have been emerging very recently, but all are in the demo stage or abandoned and none seem that usable.
 
 ### **How does it work?**
-Give the program a netlist, and it will return the circuit equations. These equations can be used to find any voltage or current in the circuit, which the program can also do for you, automatically. To here, to see a list of all the [features](https://github.com/NicklasVraa/ELABorate/wiki/2.-Overview-of-Features).
+The most basic functionality is: give the program a netlist, and it will return the circuit equations. These equations contain all the information one needs to understand the behavior of the circuit.
 
 ### **Future plans**
 - Function for conversion into Thevenin/Norton equivalent circuits.
@@ -20,7 +18,7 @@ Give the program a netlist, and it will return the circuit equations. These equa
 - Supporting larger structures like ideal-opamps, basic common amplifiers.
 - Subcircuit functionality, where you can package a netlist as a single component to be used in other netlists.
 - Transfer-function-to-circuit functionality where you define a transfer function and get a netlist in return.
-- Image-to-netlist function, using Matlab computer vision library.
+- Image-to-netlist function, using MATLAB computer vision library.
 
 ---
 
