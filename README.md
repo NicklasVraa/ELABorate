@@ -25,3 +25,7 @@ Below are links to handful of printouts of MATLAB livescripts, that showcase som
 - [Simplifying circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s5_circuit_simplification.pdf)
 - [Mosfet amplifier modelling](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s6_mosfet_amps.pdf)
 - [Transmuting systems](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/transmuting_systems.pdf)
+
+### **Adding elements**
+To add an element, have the element class inherit from the `Element` class.
+Make sure to update the `Circuit` class, especially the functions relating to updating element arrays.
