@@ -1,0 +1,6 @@
+VBB 0 1 DC
+VCC 5 0 DC
+Vi 1 2 AC
+RB 2 3
+Q1 3 4 0
+RC 4 5

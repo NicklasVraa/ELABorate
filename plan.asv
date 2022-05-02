@@ -4,9 +4,7 @@ Report:
 - Add examples from Microelectronic Circuits p.390, p.410, p.425, p.468.
 
 Code:
-- Extend Circuit constructor to also accept string input.
-- Create a clone function to copy a circuit object.
-- Implement high-frequency-hybrid-pi modelling.
+- Implement high-frequency-hybrid-pi modelling
 - Implement assumptions and subsequent simplification.
 - Input- and output resistances.
 - Thevenin/Norton equivalent output.

@@ -1,0 +1,6 @@
+Vi 1 0 AC
+VDD 3 0 DC
+RD 2 3
+RG 1 2
+M1 1 2 0 100
+RL 2 0
