@@ -5,6 +5,8 @@ Report:
 - Add t-model, h-param and y-param, z-param, and s-param to future additions.
 
 Code:
+- Add equivalent element naming, using the num_found variable for numbering.
+- Implement add element function.
 - Add general impedance class.
 - Implement high-frequency-hybrid-pi modelling.
 - Implement assumptions and subsequent simplification.
