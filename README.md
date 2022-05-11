@@ -11,7 +11,7 @@ Contrary to other circuit analysis software, like all SPICE-based programs, ELAB
 ### **How does it work?**
 The most basic functionality is: give the program a netlist, and it will return the circuit equations. These equations contain all the information one needs to understand the behavior of the circuit.
 
-### **Future plans**
+### **Future Additions**
 - Function for conversion into Thevenin/Norton equivalent circuits.
 - Supporting non-linear components, like diodes, MOSFETs, BJTs using different models like small-signal, etc.
 - Supporting larger structures like ideal-opamps, basic common amplifiers.
@@ -31,3 +31,17 @@ See more examples [here](https://github.com/NicklasVraa/ELABorate/blob/master/ex
 ### **Adding elements**
 To add an element, have the element class inherit from the `Element` class.
 Make sure to update the `Circuit` class, especially the functions relating to updating element arrays.
+
+---
+### Plan
+Report:
+- Add examples from Linear Circuits p.554-557, p.615, p.622.
+- Add examples from Microelectronic Circuits p.390, p.410, p.425, p.468.
+- Add t-model, h-param and y-param, z-param, and s-param to future additions.
+
+Code:
+- Thevenin/Norton equivalent output.
+- Add general impedance class.
+- Implement all-frequency-hybrid-pi modelling.
+- Implement assumptions and subsequent simplification.
+- Input- and output resistances.
