@@ -26,6 +26,8 @@ Below are links to handful of printouts of MATLAB livescripts, that showcase som
 - [Transistor modelling](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/circuit_analysis/transistor_circuits.pdf)
 - [Transmuting systems](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/control_systems/transmuting_systems.pdf)
 
+See more examples [here](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/).
+
 ### **Adding elements**
 To add an element, have the element class inherit from the `Element` class.
 Make sure to update the `Circuit` class, especially the functions relating to updating element arrays.
