@@ -21,10 +21,10 @@ The most basic functionality is: give the program a netlist, and it will return 
 
 ### **Examples**
 Below are links to handful of printouts of MATLAB livescripts, that showcase some of the features of ELABorate, as it currently is.
-- [Basic Circuit Analysis](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s0_circuit_analysis_intro.pdf)
-- [Simplifying circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s5_circuit_simplification.pdf)
-- [Mosfet amplifier modelling](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/s6_mosfet_amps.pdf)
-- [Transmuting systems](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/transmuting_systems.pdf)
+- [Basic Circuit Analysis](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/circuit_analysis/introduction.pdf)
+- [Simplifying circuits](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/circuit_manipulation/simplifying.pdf)
+- [Transistor modelling](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/circuit_analysis/transistor_circuits.pdf)
+- [Transmuting systems](https://github.com/NicklasVraa/ELABorate/blob/master/examples/pdfs/control_systems/transmuting_systems.pdf)
 
 ### **Adding elements**
 To add an element, have the element class inherit from the `Element` class.
