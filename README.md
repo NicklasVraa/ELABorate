@@ -39,3 +39,4 @@ Code:
 - Input- and output resistances.
 
 Report:
+- Add examples from Linear Circuits: Laplace Transforms.

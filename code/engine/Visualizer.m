@@ -42,34 +42,13 @@ classdef Visualizer
             impulse(ref); hold on;
             impulse(sys * ref);
 
-            title([char(name), ' Response']);
-            legend('Reference', 'Response'); hold off; grid off;
+            title([char(name), ' response']);
+            legend('Reference', 'response'); hold off; grid off;
             res = sys * ref;
         end
         
-        function plot_pz(sys)
-        % Plots pole-zero diagram of the circuit.
-            
-            pzmap(sys);
-            fprintf('For continuous-time system:\n');
-            fprintf('- Stable if all poles are left of imaginary axis.\n\n');
-            fprintf('For discrete-time system:\n');
-            fprintf('- Stable if all poles are within unit-circle.\n\n');
-            
-        end
-        
-        function plot_bode(sys)
-        % Plots Bode-diagram of the circuit.
-            
-        end
-        
-        function plot_nyq(sys)
-        % Plots Nyquist-diagram of the circuit.
-            
-        end
-        
         function lat = plot_eq(sym, fontsize)
-        % Displays an equation in a plot-window.
+        % Displays an equation in a plot-window. For future GUI.
 
             if ~isa(sym,'sym'); error('Input must be a symbolic expression'); end
             if nargin == 1; fontsize = 18; end

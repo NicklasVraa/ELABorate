@@ -284,6 +284,14 @@ classdef Analyzer
             fprintf('Transfer function object created successfully (%s sec).\n', toc);
         end
         
+        function out = apply(TF, input)
+        % Apply a signal to a circuit transfer function.
+        
+            out_s = TF * ELAB.transmute(input, 'td', 'tf');
+            syms t;
+            out = ELAB.transmute(out_s, 'tf', 'td') * heaviside(t);
+        end
+
         function RA = routh(poly_coeffs, show, epsilon)
         % Takes the coefficients of a characteristic equation of a system 
         % and returns the Routh array for stability analysis.
@@ -458,6 +466,32 @@ classdef Analyzer
         % Compound function, which calls a classification-type functions.
         
             if nargin < 2; show = false; end
+        end
+    
+        function N = period(x)
+        % Find fundamental period of function.
+            try
+                n = 0:1:100;
+                x = double(subs(x));
+                N = seqperiod(x);
+                if N == length(n)
+                    disp('Function is aperiodic.'); N = 0;
+                end
+            catch
+                disp('Function is aperiodic.'); N = 0;
+            end
+        end
+        
+        function out = observable(in)
+            out = canon(in, 'companion');
+        end
+        
+        function out = controllable(in)
+            out = ELAB.observable(in).';
+        end
+        
+        function out = jordan(in)
+            out = canon(in, 'modal');
         end
     end
     

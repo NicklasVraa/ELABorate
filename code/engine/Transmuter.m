@@ -7,20 +7,21 @@ classdef Transmuter
     
     methods(Static)
         
-        function out = transmute(in,type_in, type_out, show)
+        function out = transmute(in, type_in, type_out, show)
         % Convert any representation of a system into another representation
         % of the type, denoted by target. Act as a switcher for sub-functions.
         
-        % 'sd' = Symbolic s-domain.         'td' = Symbolic t-domain.
-        % 'tf' = Transfer function.         'ss' = State space.
-        % 'zp' = Zero-pole-gain.            'de' = Differential equation.
-        % 'ce' = Characteristic equation.   'ec' = Electric circuit.
-            if nargin < 4; show = false; end
+        % 'sd' = Symbolic s-domain       'td' = Symbolic t-domain.
+        % 'tf' = Transfer function obj.  'ss' = State space.
+        % 'zp' = Zero-pole-gain.         'de' = Differential equation.
+        % 'ce' = Characteristic eq.      'ec' = Electrical circuit.
         
+            if nargin < 4; show = false; end
+
             switch type_in
                 case 'sd'
                     switch type_out
-                        case 'td' 
+                        case 'td'
                             out = ELAB.sd2td(in, show);
                         case 'tf' 
                             out = ELAB.sd2tf(in, show);
@@ -33,29 +34,6 @@ classdef Transmuter
                         case 'de' 
                             out = ELAB.sd2de(in, show);
                         case 'ce' 
-                            out = ELAB.sd2ce(in, show);
-                        otherwise; error('Invalid type_out');
-                    end
-                case 'td'
-                    switch type_out
-                        case 'sd'
-                            out = ELAB.td2sd(in, show);
-                        case 'tf'
-                            in  = ELAB.td2sd(in, show);
-                            out = ELAB.sd2tf(in, show);
-                        case 'ss' 
-                            in  = ELAB.td2sd(in, show);
-                            in  = ELAB.sd2tf(in, show);
-                            out = ELAB.tf2ss(in, show);
-                        case 'zp'
-                            in  = ELAB.td2sd(in, show);
-                            in  = ELAB.sd2tf(in, show);
-                            out = ELAB.tf2zp(in, show);
-                        case 'de'
-                            in  = ELAB.td2sd(in, show);
-                            out = ELAB.sd2de(in, show);
-                        case 'ce'
-                            in  = ELAB.td2sd(in, show);
                             out = ELAB.sd2ce(in, show);
                         otherwise; error('Invalid type_out');
                     end
@@ -78,97 +56,100 @@ classdef Transmuter
                             out = ELAB.sd2ce(in, show);
                         otherwise; error('Invalid type_out');
                     end
-                case 'ss'
+                case 'td'
+                    in = ELAB.td2sd(in, show);
                     switch type_out
                         case 'sd'
-                            in  = ELAB.ss2tf(in, show);
+                            out = in;
+                        case 'tf'
+                            out = ELAB.sd2tf(in, show);
+                        case 'ss'
+                            in  = ELAB.sd2tf(in, show);
+                            out = ELAB.tf2ss(in, show);
+                        case 'zp'
+                            in  = ELAB.sd2tf(in, show);
+                            out = ELAB.tf2zp(in, show);
+                        case 'de'
+                            out = ELAB.sd2de(in, show);
+                        case 'ce'
+                            out = ELAB.sd2ce(in, show);
+                        otherwise; error('Invalid type_out');
+                    end
+                case 'ss'
+                    in = ELAB.ss2tf(in, show);
+                    switch type_out
+                        case 'sd'
                             out = ELAB.tf2sd(in, show);
                         case 'td'
-                            in  = ELAB.ss2tf(in, show);
                             in  = ELAB.tf2sd(in, show);
                             out = ELAB.sd2td(in, show);
                         case 'tf'
-                            out = ELAB.ss2tf(in, show);
+                            out = in;
                         case 'zp'
-                            in  = ELAB.ss2tf(in, show);
                             out = ELAB.tf2zp(in, show);
                         case 'de'
-                            in  = ELAB.ss2tf(in, show);
                             in  = ELAB.tf2sd(in, show);
                             out = ELAB.sd2de(in, show);
                         case 'ce'
-                            in  = ELAB.ss2tf(in, show);
                             in  = ELAB.tf2sd(in, show);
                             out = ELAB.sd2ce(in, show);
                         otherwise; error('Invalid type_out');
                     end
                 case 'zp'
+                    in = ELAB.zp2tf(in, show);
                     switch type_out
                         case 'sd'
-                            in  = ELAB.zp2tf(in, show);
                             out = ELAB.tf2sd(in, show);
                         case 'td'
-                            in  = ELAB.zp2tf(in, show);
                             in  = ELAB.tf2sd(in, show);
                             out = ELAB.sd2td(in, show);
                         case 'tf'
-                            out = ELAB.zp2tf(in, show);
+                            out = in;
                         case 'ss'
-                            in  = ELAB.zp2tf(in, show);
                             out = ELAB.tf2ss(in, show);
                         case 'de'
-                            in  = ELAB.zp2tf(in, show);
                             in  = ELAB.tf2sd(in, show);
                             out = ELAB.sd2de(in, show);
                         case 'ce'
-                            in  = ELAB.zp2tf(in, show);
                             in  = ELAB.tf2sd(in, show);
                             out = ELAB.sd2ce(in, show);
                         otherwise; error('Invalid type_out');
                     end
                 case 'de'
+                    in = ELAB.de2sd(in, show);
                     switch type_out
                         case 'sd'
-                            out = ELAB.de2sd(in, show);
+                            out = in;
                         case 'td'
-                            in  = ELAB.de2sd(in, show);
                             out = ELAB.sd2td(in, show);
                         case 'tf'
-                            in  = ELAB.de2sd(in, show);
                             out = ELAB.sd2tf(in, show);
-                        case 'ss' 
-                            in  = ELAB.de2sd(in, show);
+                        case 'ss'
                             in  = ELAB.sd2tf(in, show);
                             out = ELAB.tf2ss(in, show);
                         case 'zp'
-                            in  = ELAB.de2sd(in, show);
                             in  = ELAB.sd2tf(in, show);
                             out = ELAB.tf2zp(in, show);
                         case 'ce'
-                            in  = ELAB.de2sd(in, show);
                             out = ELAB.sd2ce(in, show);
                         otherwise; error('Invalid type_out');
                     end
                 case 'ce'
+                    in = ELAB.ce2sd(in, show);
                     switch type_out
                         case 'sd'
-                            out = ELAB.ce2sd(in, show);
+                            out = in;
                         case 'td'
-                            in  = ELAB.ce2sd(in, show);
                             out = ELAB.sd2td(in, show);
                         case 'tf'
-                            in  = ELAB.ce2sd(in, show);
                             out = ELAB.sd2tf(in, show);
-                        case 'ss' 
-                            in  = ELAB.ce2sd(in, show);
+                        case 'ss'
                             in  = ELAB.sd2tf(in, show);
                             out = ELAB.tf2ss(in, show);
                         case 'zp'
-                            in  = ELAB.ce2sd(in, show);
                             in  = ELAB.sd2tf(in, show);
                             out = ELAB.tf2zp(in, show);
                         case 'de'
-                            in  = ELAB.ce2sd(in, show);
                             out = ELAB.sd2de(in, show);
                         otherwise; error('Invalid type_out');
                     end
@@ -179,6 +160,7 @@ classdef Transmuter
         
         function out = sd2tf(in, show)
         % Symbolic expression to transfer function.
+            
             if nargin < 2; show = false; end
             eval("s = tf('s');");
             eval(['T = ', char(in), ';']);
@@ -187,6 +169,7 @@ classdef Transmuter
         
         function out = zd2tf(in, show)
         % Symbolic expression to transfer function.
+            
             if nargin < 2; show = false; end
             eval("z = tf('z');");
             eval(['T = ', char(in), ';']);
@@ -195,6 +178,7 @@ classdef Transmuter
         
         function out = tf2sd(in, show)
         % Transfer function to symbolic expression.
+            
             if nargin < 2; show = false; end
             syms s;
             out = poly2sym(cell2mat(in.num),s)/poly2sym(cell2mat(in.den),s);
@@ -202,12 +186,14 @@ classdef Transmuter
         
         function out = tf2ss(in, show)
         % Transfer function to state space.
+            
             if nargin < 2; show = false; end
             out = ss(in);
         end
         
         function out = ss2tf(in, show)
         % State space to transfer function.
+            
             if nargin < 2; show = false; end
             [num, den] = ss2tf(in.A, in.B, in.C, in.D);
             out = tf(num,den);
@@ -215,18 +201,21 @@ classdef Transmuter
         
         function out = tf2zp(in, show)
         % Transfer function to zero-pole-gain function.
+            
             if nargin < 2; show = false; end
             out = zpk(in);
         end
         
         function out = zp2tf(in, show)
         % Zero-pole-gain function to transfer function.
+            
             if nargin < 2; show = false; end
             out = tf(in);
         end
         
         function out = de2sd(in, show)
         % Differential equation to symbolic expression.
+            
             if nargin < 2; show = false; end
             syms y(t) s Y;
             eq = laplace(in.eq, t, s);
@@ -251,6 +240,7 @@ classdef Transmuter
         
         function out = sd2de(in, show)
         % Symbolic expression to differential equation.
+            
             if nargin < 2; show = false; end
             out = in;
             error('Not yet implemented');
@@ -258,6 +248,7 @@ classdef Transmuter
         
         function out = sd2ce(in, show)
         % Symbolic expression to characteristic equation.
+            
             if nargin < 2; show = false; end
             syms s;
             eq1 = expand(in);
@@ -275,6 +266,7 @@ classdef Transmuter
         
         function out = ce2sd(in, show)
         % Characteristic equation to symbolic expression.
+            
             if nargin < 2; show = false; end
             syms s;
             out = poly2sym(in,s);
@@ -282,6 +274,7 @@ classdef Transmuter
         
         function out = sd2td(in, show)
         % Symbolic in s-domain to t-domain.
+            
             if nargin < 2; show = false; end
             syms s t;
             pf = partfrac(in);
@@ -296,6 +289,7 @@ classdef Transmuter
         
         function out = td2sd(in, show)
         % Symbolic in t-domain to s-domain.
+            
             if nargin < 2; show = false; end
             syms s t;
             ex = expand(in);
@@ -312,7 +306,8 @@ classdef Transmuter
         end
         
         function out = nd2zd(in, show)
-            % Symbolic in n-domain to z-domain.
+        % Symbolic in n-domain to z-domain.
+            
             if nargin < 2; show = false; end
             syms n z;
             ex = expand(in);
@@ -326,32 +321,6 @@ classdef Transmuter
                 disp('Z-transform:'); disp(tr);
                 disp('Collected and simplified:'); disp(out);
             end
-        end
-        
-        function N = period(x)
-        % Find fundamental period of function.
-            try
-                n = 0:1:100;
-                x = double(subs(x));
-                N = seqperiod(x);
-                if N == length(n)
-                    disp('Function is aperiodic.'); N = 0;
-                end
-            catch
-                disp('Function is aperiodic.'); N = 0;
-            end
-        end
-        
-        function out = observable(in)
-            out = canon(in, 'companion');
-        end
-        
-        function out = controllable(in)
-            out = ELAB.observable(in).';
-        end
-        
-        function out = jordan(in)
-            out = canon(in, 'modal');
         end
     end
 end
