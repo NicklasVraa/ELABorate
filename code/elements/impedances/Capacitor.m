@@ -13,7 +13,7 @@ classdef Capacitor < Impedance
             if isempty(capacitance)
                 c = sym(id);
             else
-                c = sym(capacitance);
+                c = sym(eval(capacitance));
             end
 
             obj = obj@Impedance(id, anode, cathode, 1/(sym('s')*c));

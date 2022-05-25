@@ -26,14 +26,14 @@ classdef Indep_VS < Indep_S
             if isempty(voltage)
                 obj.voltage = sym(id);
             else
-                obj.voltage = sym(voltage);
+                obj.voltage = sym(eval(voltage));
             end
         end
         
         function str = to_net(obj)
             if obj.is_AC, type = 'AC';
             else, type = 'DC'; end
-            
+
             str = sprintf('%s %s %s %s %s\n', ...
                 obj.id, num2str(obj.anode), num2str(obj.cathode), type, obj.voltage);
         end

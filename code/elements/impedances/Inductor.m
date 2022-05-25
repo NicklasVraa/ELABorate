@@ -13,7 +13,7 @@ classdef Inductor < Impedance
             if isempty(inductance)
                 l = sym(id);
             else
-                l = sym(inductance);
+                l = sym(eval(inductance));
             end
 
             obj = obj@Impedance(id, anode, cathode, sym('s')*l);

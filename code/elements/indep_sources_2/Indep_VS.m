@@ -1,32 +1,32 @@
 % Part of ELABorate™, all rights reserved.
 % Auth: Nicklas Vraa
 
-classdef Indep_IS < Indep_S
-% Independent Current Source.
+classdef Indep_VS < Indep_S
+% Independent Voltage Source.
     
     properties
-        is_AC; current;
+        is_AC; voltage;
     end
     
     methods
-        function obj = Indep_IS(id, anode, cathode, type, current)
+        function obj = Indep_VS(id, anode, cathode, type, voltage)
             obj.id = id;
             obj.anode = anode;
             obj.cathode = cathode;
             obj.terminals = [obj.anode, obj.cathode];
             
             if strcmpi(type, 'AC')
-                obj.is_AC = true;
+                obj.is_AC = 1;
             elseif strcmpi(type, 'DC')
-                obj.is_AC = false;
+                obj.is_AC = 0;
             else
-                error("Invalid type. Use 'AC' or 'DC'.\n");
+                error("Invalid type. Use 'AC' or 'DC'.");
             end
             
-            if isempty(current)
-                obj.current = sym(id);
+            if isempty(voltage)
+                obj.voltage = sym(id);
             else
-                obj.current = sym(eval(current));
+                obj.voltage = str2sym(voltage);
             end
         end
         
@@ -34,10 +34,12 @@ classdef Indep_IS < Indep_S
             if obj.is_AC, type = 'AC';
             else, type = 'DC'; end
             
+            v = string(obj.voltage);
+            v = strrep(v,' ',''); % Remove spaces.
+
             str = sprintf('%s %s %s %s %s\n', ...
-                obj.id, num2str(obj.anode), num2str(obj.cathode), type, obj.current);
+                obj.id, num2str(obj.anode), num2str(obj.cathode), type, v);
         end
     end
 end
-
 

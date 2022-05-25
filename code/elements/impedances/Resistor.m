@@ -13,7 +13,7 @@ classdef Resistor < Impedance
             if isempty(resistance)
                 r = sym(id);
             else
-                r = sym(resistance);
+                r = sym(eval(resistance));
             end
 
             obj = obj@Impedance(id, anode, cathode, r);
