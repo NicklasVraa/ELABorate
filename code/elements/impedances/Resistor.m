@@ -13,7 +13,7 @@ classdef Resistor < Impedance
             if isempty(resistance)
                 r = sym(id);
             else
-                r = sym(eval(resistance));
+                r = str2sym(string(resistance));
             end
 
             obj = obj@Impedance(id, anode, cathode, r);
@@ -22,7 +22,8 @@ classdef Resistor < Impedance
 
         function str = to_net(obj)
             str = sprintf('%s %s %s %s\n', ...
-                obj.id, num2str(obj.anode), num2str(obj.cathode), obj.resistance);
+                obj.id, num2str(obj.anode), num2str(obj.cathode), ...
+                strrep(string(obj.resistance),' ',''));
         end
     end
 end

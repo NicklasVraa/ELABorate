@@ -13,7 +13,7 @@ classdef Capacitor < Impedance
             if isempty(capacitance)
                 c = sym(id);
             else
-                c = sym(eval(capacitance));
+                c = str2sym(string(capacitance));
             end
 
             obj = obj@Impedance(id, anode, cathode, 1/(sym('s')*c));
@@ -22,7 +22,8 @@ classdef Capacitor < Impedance
         
         function str = to_net(obj)
             str = sprintf('%s %s %s %s\n', ...
-                obj.id, num2str(obj.anode), num2str(obj.cathode), obj.capacitance);
+                obj.id, num2str(obj.anode), num2str(obj.cathode), ...
+                strrep(string(obj.capacitance),' ',''));
         end
     end
 end

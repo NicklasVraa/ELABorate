@@ -13,7 +13,7 @@ classdef Inductor < Impedance
             if isempty(inductance)
                 l = sym(id);
             else
-                l = sym(eval(inductance));
+                l = str2sym(string(inductance));
             end
 
             obj = obj@Impedance(id, anode, cathode, sym('s')*l);
@@ -22,7 +22,8 @@ classdef Inductor < Impedance
         
         function str = to_net(obj)
             str = sprintf('%s %s %s %s\n', ...
-                obj.id, num2str(obj.anode), num2str(obj.cathode), obj.inductance);
+                obj.id, num2str(obj.anode), num2str(obj.cathode), ...
+                strrep(string(obj.inductance),' ',''));
         end
     end
 end

@@ -224,16 +224,55 @@ classdef Analyzer
             for index = 1:obj.num_elements
                 switch Name{index}(1)
                     case {'V', 'I'}
-                        [num, status] = str2num(arg4{index});
+                        if isempty(arg4{index})
+                            syms(Name{index});
+                        else
+                            [num, status] = str2num(arg4{index});
+                            if status
+                                eval(sprintf('%s = %g;', Name{index}, num));
+                            else
+                                if strcmp(arg3{index}, 'AC')
+                                    syms t;
+                                    exp = laplace(str2sym(arg4{index}));
+                                    eval(sprintf('%s = %s;', Name{index}, exp));
+                                else
+                                    syms(Name{index});
+                                end
+                            end
+                        end
                     case {'R', 'L', 'C'}
-                        [num, status] = str2num(arg3{index});
+                        if isempty(arg3{index})
+                            syms(Name{index});
+                        else
+                            [num, status] = str2num(arg3{index});
+                            if status
+                                eval(sprintf('%s = %g;', Name{index}, num));
+                            else
+                                syms(Name{index});
+                            end
+                        end
                     case {'H', 'F'}
-                        [num, status] = str2num(arg4{index});
+                        if isempty(arg4{index})
+                            syms(Name{index});
+                        else
+                            [num, status] = str2num(arg4{index});
+                            if status
+                                eval(sprintf('%s = %g;', Name{index}, num));
+                            else
+                                syms(Name{index});
+                            end
+                        end
                     case {'E', 'G'}
-                        [num, status] = str2num(arg5{index});
-                end
-                if status, eval(sprintf('%s = %g;', Name{index}, num));
-                else, syms(Name{index});
+                        if isempty(arg5{index})
+                            syms(Name{index});
+                        else
+                            [num, status] = str2num(arg5{index});
+                            if status
+                                eval(sprintf('%s = %g;', Name{index}, num));
+                            else
+                                syms(Name{index});
+                            end
+                        end
                 end
             end
 

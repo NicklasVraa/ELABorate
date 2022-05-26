@@ -38,7 +38,8 @@ classdef Impedance < Element
         
          function str = to_net(obj)
              str = sprintf('%s %s %s %s\n', ...
-                 obj.id, num2str(obj.anode), num2str(obj.cathode), obj.impedance);
+                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
+                 strrep(string(obj.impedance),' ',''));
          end
     end
 end

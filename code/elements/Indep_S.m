@@ -5,6 +5,7 @@ classdef Indep_S < Element
 % The basis for all independent sources.
     
     properties
+        is_AC;
         anode; cathode;
         num_terminals = 2;
     end

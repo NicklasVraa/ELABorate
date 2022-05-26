@@ -5,7 +5,7 @@ classdef Indep_VS < Indep_S
 % Independent Voltage Source.
     
     properties
-        is_AC; voltage;
+        voltage;
     end
     
     methods
@@ -26,7 +26,7 @@ classdef Indep_VS < Indep_S
             if isempty(voltage)
                 obj.voltage = sym(id);
             else
-                obj.voltage = sym(eval(voltage));
+                obj.voltage = str2sym(string(voltage));
             end
         end
         
@@ -35,7 +35,8 @@ classdef Indep_VS < Indep_S
             else, type = 'DC'; end
 
             str = sprintf('%s %s %s %s %s\n', ...
-                obj.id, num2str(obj.anode), num2str(obj.cathode), type, obj.voltage);
+                obj.id, num2str(obj.anode), num2str(obj.cathode), ...
+                type, strrep(string(obj.voltage),' ',''));
         end
     end
 end
