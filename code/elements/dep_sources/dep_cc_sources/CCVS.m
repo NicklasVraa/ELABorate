@@ -14,7 +14,7 @@ classdef CCVS < Dep_CC
             obj.anode = anode;
             obj.cathode = cathode;
             obj.ctrl_anode = ctrl_anode;
-            obj.terminals = [obj.anode, obj.cathode]; %, obj.ctrl_anode];
+            obj.terminals = [obj.anode, obj.cathode];
             
             if exist('r_gain', 'var')
                 obj.r_gain = r_gain;

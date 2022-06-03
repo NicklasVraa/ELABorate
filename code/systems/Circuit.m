@@ -28,7 +28,7 @@ classdef Circuit < Base_System
     end
 
     properties (Access = {?ELAB, ?Analyzer, ?Modeller, ?Transmuter, ?Visualizer})
-    % Information only available to object itself.
+    % Information only available to ELABorate.
         
         % Flags.
         symbolically_analyzed = false;     numerically_analyzed = false;

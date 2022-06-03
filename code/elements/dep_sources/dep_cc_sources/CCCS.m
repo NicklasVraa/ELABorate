@@ -14,7 +14,7 @@ classdef CCCS < Dep_CC
             obj.anode = anode;
             obj.cathode = cathode;
             obj.ctrl_anode = ctrl_anode;
-            obj.terminals = [obj.anode, obj.cathode]; %, obj.ctrl_anode];
+            obj.terminals = [obj.anode, obj.cathode];
             
             if exist('beta_gain', 'var')
                 obj.beta_gain = beta_gain;
