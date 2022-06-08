@@ -2,6 +2,9 @@
 % Auth: Nicklas Vraa
 
 classdef Capacitor < Impedance
+% A generic capacitor class extending the impedance class.
+% May be the basis for more specific capacitors with their 
+% own properties and methods.
     
     properties
         capacitance;
@@ -9,6 +12,7 @@ classdef Capacitor < Impedance
     
     methods
         function obj = Capacitor(id, anode, cathode, capacitance)
+        % Capacitor object constructor. Capacitance is optional.
 
             if isempty(capacitance)
                 c = sym(id);
@@ -21,9 +25,15 @@ classdef Capacitor < Impedance
         end
         
         function str = to_net(obj)
+        % Override of the super-class function.
+        
             str = sprintf('%s %s %s %s\n', ...
                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
                 strrep(string(obj.capacitance),' ',''));
+        end
+
+        function cloned = clone(obj)
+            cloned = Capacitor(obj.id, obj.anode, obj.cathode, obj.capacitance);
         end
     end
 end

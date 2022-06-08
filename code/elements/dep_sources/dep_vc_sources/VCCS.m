@@ -10,22 +10,25 @@ classdef VCCS < Dep_VC
     
     methods
         function obj = VCCS(id, anode, cathode, ctrl_anode, ctrl_cathode, gm_gain)
-            obj.id = id;
-            obj.anode = anode;
-            obj.cathode = cathode;
-            obj.ctrl_anode = ctrl_anode;
-            obj.ctrl_cathode = ctrl_cathode;
-            obj.terminals = [obj.anode, obj.cathode, obj.ctrl_anode, obj.ctrl_cathode];
-            
+        % VCCS object constructor.
+
             if exist('gm_gain', 'var')
-                obj.gm_gain = gm_gain;
+                gm = sym(gm_gain);
             end
+            
+            obj = obj@Dep_VC(id, anode, cathode, ctrl_anode, ctrl_cathode);
+            obj.gm_gain = gm;
         end
         
         function str = to_net(obj)
             str = sprintf('%s %s %s %s %s %s\n', ...
                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
                 num2str(obj.ctrl_anode), num2str(obj.ctrl_cathode), obj.gm_gain);
+        end
+
+        function cloned = clone(obj)
+            cloned = VCCS(obj.id, obj.anode, obj.cathode, ...
+                obj.ctrl_anode, obj.gm_gain);
         end
     end
 end

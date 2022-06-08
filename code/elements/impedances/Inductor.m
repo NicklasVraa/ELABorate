@@ -2,6 +2,9 @@
 % Auth: Nicklas Vraa
 
 classdef Inductor < Impedance
+% A generic inductor class extending the impedance class.
+% May be the basis for more specific inductors with their 
+% own properties and methods.
     
     properties
         inductance;
@@ -9,7 +12,8 @@ classdef Inductor < Impedance
     
     methods
         function obj = Inductor(id, anode, cathode, inductance)
-            
+        % Inductor object constructor. Inductance is optional.
+
             if isempty(inductance)
                 l = sym(id);
             else
@@ -21,9 +25,15 @@ classdef Inductor < Impedance
         end
         
         function str = to_net(obj)
+        % Override of the super-class function.
+        
             str = sprintf('%s %s %s %s\n', ...
                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
                 strrep(string(obj.inductance),' ',''));
+        end
+
+        function cloned = clone(obj)
+            cloned = Inductor(obj.id, obj.anode, obj.cathode, obj.inductance);
         end
     end
 end

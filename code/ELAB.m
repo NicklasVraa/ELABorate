@@ -1,8 +1,8 @@
 % Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
-classdef ELAB < Analyzer & Modeller & Visualizer & Transmuter & Signals
-% The combination of the three main classes of this project.
+classdef ELAB < Analyzer & Modeller & Visualizer & Transmuter
+% The combination of the main classes of the ELABorate project.
     
     properties
         notes;

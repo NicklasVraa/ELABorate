@@ -1,7 +1,7 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
-classdef Atom
+classdef (Abstract) Atom
 % The Atomic element class.
     
     properties

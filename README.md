@@ -29,14 +29,3 @@ See more examples [here](https://github.com/NicklasVraa/ELABorate/blob/master/ex
 ### **Adding elements**
 To add an element, have the element class inherit from the `Element` class.
 Make sure to update the `Circuit` class, especially the functions relating to updating element arrays.
-
----
-### Plan
-Code:
-- Double-check s-domain to t-domain function.
-- Implement all-frequency-hybrid-pi modelling.
-- Implement assumptions and subsequent simplification.
-- Input- and output resistances.
-
-Report:
-- Add examples from Linear Circuits: Laplace Transforms.

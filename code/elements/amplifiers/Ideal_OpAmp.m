@@ -2,7 +2,8 @@
 % Auth: Nicklas Vraa
 
 classdef Ideal_OpAmp < Amplifier
-% Model of the Ideal Operational Amplifier.
+% Model of the ideal operational amplifier.
+% May be used as a basis for non-ideal op-amps.
     
     properties
         input_1; input_2; output;
@@ -10,6 +11,8 @@ classdef Ideal_OpAmp < Amplifier
     
     methods
         function obj = Ideal_OpAmp(id, input_1, input_2, output)
+        % Operational-amplifier object constructor.
+
             obj.id = id;
             obj.input_1 = input_1;
             obj.input_2 = input_2;
@@ -31,6 +34,10 @@ classdef Ideal_OpAmp < Amplifier
             obj.input_1 = obj.terminals(1);
             obj.input_2 = obj.terminals(2);
             obj.output  = obj.terminals(3);
+        end
+
+        function cloned = clone(obj)
+            cloned = Ideal_OpAmp(obj.id, obj.input_1, obj.input_2, obj.output);
         end
     end
 end

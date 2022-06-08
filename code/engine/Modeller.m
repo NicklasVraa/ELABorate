@@ -34,9 +34,10 @@ classdef Modeller
         % Short-circuit AC voltage sources and inductors.
         % Open-circuit AC current sources and capacitors.
             
-            to_be_shorted = [];
-            to_be_opened = [];
+            to_be_shorted = [];  to_be_opened = [];
 
+            % Find everything that needs to be shorted 
+            % or opened, and store it in arrays.
             for index = 1:obj.num_Indep_VSs
                 if obj.Indep_VSs(index).is_AC
                     to_be_shorted = [to_be_shorted, obj.Indep_VSs(index)];
@@ -57,6 +58,7 @@ classdef Modeller
                 to_be_opened = [to_be_opened, obj.Capacitors(index)];
             end
             
+            % Carry out the shorting and opening.
             for index = 1:length(to_be_shorted)
                 obj.short(to_be_shorted(index));
             end
@@ -65,15 +67,17 @@ classdef Modeller
                 obj.open(to_be_opened(index));
             end
 
-            obj.trim;
+            obj.trim; % Remove redundancy.
         end
         
         function obj = ac_eq(obj)
-        % Short-circuit DC sources.
+        % Short-circuit DC voltage sources.
+        % Open-circuit DC current sources.
             
-            to_be_shorted = [];
-            to_be_opened = [];
+            to_be_shorted = [];  to_be_opened = [];
             
+            % Find everything that needs to be shorted 
+            % or opened, and store it in arrays.
             for index = 1:obj.num_Indep_VSs
                 if ~obj.Indep_VSs(index).is_AC
                     to_be_shorted = [to_be_shorted, obj.Indep_VSs(index)];
@@ -86,6 +90,7 @@ classdef Modeller
                 end
             end
             
+            % Carry out the shorting and opening.
             for index = 1:length(to_be_shorted)
                 obj.short(to_be_shorted(index));
             end
@@ -94,14 +99,13 @@ classdef Modeller
                 obj.open(to_be_opened(index));
             end
 
-            obj.trim;
+            obj.trim; % Remove redundancy.
         end
         
         function obj = remove_sources(obj)
         % Short voltage-sources and open current-sources.
 
-            to_be_shorted = [];
-            to_be_opened = [];
+            to_be_shorted = [];  to_be_opened = [];
 
             for index = 1:obj.num_Indep_VSs
                 to_be_shorted = [to_be_shorted, obj.Indep_VSs(index)];
@@ -136,34 +140,44 @@ classdef Modeller
                 obj.open(to_be_opened(index));
             end
 
-            obj.trim;
+            obj.trim; % Remove redundancy.
         end
 
         function obj = thevenin(obj, load)
         % Returns the Thevenin-equivalent of the given circuit,
         % as seen by the given load.
+            
+            Z_L = load.clone;
 
-            [v_th, Z, load_id, load_val] = Modeller.equivalent(obj, load);
+            [v_th, Z] = Modeller.equivalent(obj, load);
             z_th = Z.impedance;
 
             obj.add(Indep_VS('Vth', 1, 0, 'DC', v_th));
             obj.add(Impedance('Zth', 1, 2, z_th));
             obj.remove(Z);
-            obj.add(Impedance(load_id, 2, 0, load_val));
+
+            Z_L.update_terminals(1, 2);
+            Z_L.update_terminals(2, 0);
+            obj.add(Z_L); % Add load back.
         end
         
         function obj = norton(obj, load)
         % Returns the Norton-equivalent of the given circuit,
         % as seen by the given load.
+
+            Z_L = load.clone;
             
-            [v_th, Z, load_id, load_val] = Modeller.equivalent(obj, load);
+            [v_th, Z] = Modeller.equivalent(obj, load);
             z_th = Z.impedance;
             i_no = v_th / z_th;
             
             obj.add(Indep_IS('Ino', 1, 0, 'DC', i_no));
             obj.add(Impedance('Zno', 1, 0, z_th));
             obj.remove(Z);
-            obj.add(Impedance(load_id, 1, 0, load_val));
+
+            Z_L.update_terminals(1, 1);
+            Z_L.update_terminals(2, 0);
+            obj.add(Z_L); % Add load back.
         end
 
         function obj = hybrid_pi(obj, freq)
@@ -294,7 +308,7 @@ classdef Modeller
         function done = simplify_parallel(obj, z_eq)
         % Simplifies parallel elements of same type and returns how many pairs were found.
             
-            done = true;
+            done = true; % Set to false if any parallels are found.
 
             R = Modeller.find_parallel(obj, obj.Resistors);
             if ~isempty(R)
@@ -351,7 +365,7 @@ classdef Modeller
         function done = simplify_series(obj, z_eq)
         % Simplifies series elements of same type and returns how many pairs were found.
             
-            done = true;
+            done = true; % Set to false if any series are found.
 
             R = Modeller.find_series(obj, obj.Resistors);
             if ~isempty(R)
@@ -484,28 +498,30 @@ classdef Modeller
             nodes = uL(histcounts(L,[uL,inf])==1);
         end
     
-        function [v_th, Z, load_id, load_val] = equivalent(obj, load)
+        function [v_th, Z_th] = equivalent(obj, load)
         % Load object is deleted upon envoking open().
-
-            load_id = load.id;
-            load_val = load.impedance;
-
+            
             ports = load.terminals;
             obj.open(load);
             ELAB.evaluate(obj);
             
-            if ports(1) == 0, v1 = 0;
-            else, v1 = rhs(obj.numerical_node_voltages(ports(1)));
+            if ports(1) == 0
+                v1 = 0;
+            else 
+                v1 = rhs(obj.numerical_node_voltages(ports(1)));
             end
 
-            if ports(2) == 0, v2 = 0;
-            else, v2 = rhs(obj.numerical_node_voltages(ports(2)));
+            if ports(2) == 0
+                v2 = 0;
+            else
+                v2 = rhs(obj.numerical_node_voltages(ports(2)));
             end
             
             Modeller.remove_sources(obj);
             Modeller.simplify(obj, true);
+
             v_th = v1 - v2;
-            Z = obj.Impedances(1);
+            Z_th = obj.Impedances(1);
         end
     end
 end

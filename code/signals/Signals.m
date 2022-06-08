@@ -6,16 +6,23 @@ classdef Signals
     
     methods (Static)
         function sig = impulse(n)
+        % Dirac delta function.
+
             sig = kroneckerDelta(n);
         end
         
         function sig = step(n)
+        % Unit-step function.
+
             sig = heaviside(n) + 0.5*kroneckerDelta(n);
         end
         
         function xq = quantize(x, L, min_L, max_L)
-        % Implements a uniform quantizer of L reproducer levels. Input signal x is a vector.
-        % If L is odd -> 'midtread'. When L is even -> 'midrise'. Decision levels = L + 1.
+        % Implements a uniform quantizer of L reproducer levels. 
+        % Input signal x is a vector.
+        % If L is odd -> 'midtread'. 
+        % When L is even -> 'midrise'. 
+        % Decision levels = L + 1.
 
             N = length(x); xq = zeros(1,N);
             Delta = (max_L - min_L)/L;
@@ -40,6 +47,7 @@ classdef Signals
         
         function sig = pcm(sig, bits, mode)
         % Pulse-Code Modulation
+
             sig = de2bi(sig, bits, 'left-msb');
             
             switch mode

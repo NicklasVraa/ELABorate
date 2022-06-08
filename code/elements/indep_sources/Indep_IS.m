@@ -2,7 +2,9 @@
 % Auth: Nicklas Vraa
 
 classdef Indep_IS < Indep_S
-% Independent Current Source.
+% Independent-current-source class implementing 
+% its abstract super-class: independent source.
+% May be extended to implement non-ideal versions.
     
     properties
         current;
@@ -10,27 +12,21 @@ classdef Indep_IS < Indep_S
     
     methods
         function obj = Indep_IS(id, anode, cathode, type, current)
-            obj.id = id;
-            obj.anode = anode;
-            obj.cathode = cathode;
-            obj.terminals = [obj.anode, obj.cathode];
-            
-            if strcmpi(type, 'AC')
-                obj.is_AC = 1;
-            elseif strcmpi(type, 'DC')
-                obj.is_AC = 0;
-            else
-                error("Invalid type. Use 'AC' or 'DC'.");
-            end
+        % Independant-current-source object constructor.
             
             if isempty(current)
-                obj.current = sym(id);
+                i = sym(id);
             else
-                obj.current = str2sym(string(current));
+                i = str2sym(string(current));
             end
+
+            obj = obj@Indep_S(id, anode, cathode, type);
+            obj.current = i;
         end
         
         function str = to_net(obj)
+        % Override of the super-class function.
+
             if obj.is_AC, type = 'AC';
             else, type = 'DC'; end
 
@@ -38,7 +34,10 @@ classdef Indep_IS < Indep_S
                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
                 type, strrep(string(obj.current),' ',''));
         end
+
+        function cloned = clone(obj)
+            cloned = Indep_IS(obj.id, obj.anode, obj.cathode, ...
+                obj.type, obj.current);
+        end
     end
 end
-
-

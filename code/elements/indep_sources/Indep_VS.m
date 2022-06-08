@@ -2,7 +2,9 @@
 % Auth: Nicklas Vraa
 
 classdef Indep_VS < Indep_S
-% Independent Voltage Source.
+% Independent-voltage-source class implementing 
+% its abstract super-class: independent source. 
+% May be extended to implement non-ideal versions.
     
     properties
         voltage;
@@ -10,27 +12,21 @@ classdef Indep_VS < Indep_S
     
     methods
         function obj = Indep_VS(id, anode, cathode, type, voltage)
-            obj.id = id;
-            obj.anode = anode;
-            obj.cathode = cathode;
-            obj.terminals = [obj.anode, obj.cathode];
-            
-            if strcmpi(type, 'AC')
-                obj.is_AC = 1;
-            elseif strcmpi(type, 'DC')
-                obj.is_AC = 0;
-            else
-                error("Invalid type. Use 'AC' or 'DC'.");
-            end
+        % Independant-voltage-source object constructor.
             
             if isempty(voltage)
-                obj.voltage = sym(id);
+                v = sym(id);
             else
-                obj.voltage = str2sym(string(voltage));
+                v = str2sym(string(voltage));
             end
+
+            obj = obj@Indep_S(id, anode, cathode, type);
+            obj.voltage = v;
         end
         
         function str = to_net(obj)
+        % Override of the super-class function.
+
             if obj.is_AC, type = 'AC';
             else, type = 'DC'; end
 
@@ -38,6 +34,10 @@ classdef Indep_VS < Indep_S
                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
                 type, strrep(string(obj.voltage),' ',''));
         end
+
+        function cloned = clone(obj)
+            cloned = Indep_VS(obj.id, obj.anode, obj.cathode, ...
+                obj.type, obj.voltage);
+        end
     end
 end
-

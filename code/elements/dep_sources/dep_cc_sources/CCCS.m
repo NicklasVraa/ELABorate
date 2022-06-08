@@ -10,21 +10,25 @@ classdef CCCS < Dep_CC
     
     methods
         function obj = CCCS(id, anode, cathode, ctrl_anode, beta_gain)
-            obj.id = id;
-            obj.anode = anode;
-            obj.cathode = cathode;
-            obj.ctrl_anode = ctrl_anode;
-            obj.terminals = [obj.anode, obj.cathode];
+        % CCCS object constructor.
             
             if exist('beta_gain', 'var')
-                obj.beta_gain = beta_gain;
+                beta = sym(beta_gain);
             end
+
+            obj = obj@Dep_CC(id, anode, cathode, ctrl_anode);
+            obj.beta_gain = beta;
         end
         
         function str = to_net(obj)
             str = sprintf('%s %s %s %s %s\n', ...
                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
                 num2str(obj.ctrl_anode), obj.beta_gain);
+        end
+
+        function cloned = clone(obj)
+            cloned = CCCS(obj.id, obj.anode, obj.cathode, ...
+                obj.ctrl_anode, obj.beta_gain);
         end
     end
 end

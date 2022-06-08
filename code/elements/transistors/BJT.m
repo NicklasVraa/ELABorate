@@ -56,6 +56,11 @@ classdef BJT < Transistor
             obj.collector_node = obj.terminals(2);
             obj.emitter_node = obj.terminals(3);
         end
+
+        function cloned = clone(obj)
+            cloned = BJT(obj.id, obj.base_node, obj.collector_node, ...
+                obj.emitter_node, obj.gain);
+        end
     end
 end
 

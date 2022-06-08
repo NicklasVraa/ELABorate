@@ -56,6 +56,11 @@ classdef MOSFET < Transistor
             obj.drain_node = obj.terminals(2);
             obj.source_node = obj.terminals(3);
         end
+
+        function cloned = clone(obj)
+            cloned = MOSFET(obj.id, obj.gate_node, obj.drain_node, ...
+                obj.source_node, obj.gain);
+        end
     end
 end
 

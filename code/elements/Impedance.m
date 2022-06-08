@@ -2,8 +2,8 @@
 % Auth: Nicklas Vraa
 
 classdef Impedance < Element
-% A generic impedance class from which the resistor, 
-% capacitor and inductor inherits.
+% A generic impedance class from which the resistor, capacitor 
+% and inductor inherits, but may also be constructed directly.
     
     properties
         impedance;
@@ -14,6 +14,8 @@ classdef Impedance < Element
     
     methods
         function obj = Impedance(id, anode, cathode, impedance)
+        % Impedance object constructor. Impedance is optional.
+
             obj.id = id;
             obj.anode = anode;
             obj.cathode = cathode;
@@ -40,6 +42,10 @@ classdef Impedance < Element
             str = sprintf('%s %s %s %s\n', ...
                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
                 strrep(string(obj.impedance),' ',''));
+        end
+
+        function cloned = clone(obj)
+            cloned = Impedance(obj.id, obj.anode, obj.cathode, obj.impedance);
         end
     end
 end

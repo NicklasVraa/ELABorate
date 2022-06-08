@@ -1,3 +1,6 @@
+% Part of ELABorate, all rights reserved.
+% Auth: Nicklas Vraa
+
 classdef SI
 % A collection of physical constants and unit defintions as of May 2019.
     

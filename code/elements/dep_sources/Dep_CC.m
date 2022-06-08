@@ -1,8 +1,8 @@
 % Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
-classdef Dep_CC < Dep_S
-% The basis for all dependent sources controlled by a current.
+classdef (Abstract) Dep_CC < Dep_S
+% The abstract basis for all dependent current-controlled sources.
     
     properties
         num_terminals = 2;
@@ -10,6 +10,16 @@ classdef Dep_CC < Dep_S
     end
     
     methods
+        function obj = Dep_CC(id, anode, cathode, ctrl_anode)
+        % Dependent-current-controlled-source object constructor.
+
+            obj.id = id;
+            obj.anode = anode;
+            obj.cathode = cathode;
+            obj.ctrl_anode = ctrl_anode;
+            obj.terminals = [obj.anode, obj.cathode];
+        end
+
         function bools = is_connected(obj, node)
             bools = [obj.anode == node, obj.cathode == node];
         end

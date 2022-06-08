@@ -1,8 +1,8 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef EE
-% A collection of math notes.
+% A collection of electrical engineering notes.
     
     properties
         converters

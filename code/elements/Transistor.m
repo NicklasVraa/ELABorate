@@ -1,8 +1,8 @@
 % Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
-classdef Transistor < Element
-% The basis for all transistor variations (BJT, MOSFET).
+classdef (Abstract) Transistor < Element
+% The abstract basis for all transistor variations.
     
     properties
         gain; gain_val;
