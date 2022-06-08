@@ -1,4 +1,4 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef ELAB < Analyzer & Modeller & Visualizer & Transmuter & Signals

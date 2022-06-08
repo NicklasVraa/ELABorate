@@ -1,9 +1,9 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef Transmuter
-% A collection of functions designed to transmute a system into another
-% form, that may be more helpful for analysis or design.
+% A collection of functions designed to transmute a system into 
+% another form, that may be more helpful for analysis or design.
     
     methods(Static)
         

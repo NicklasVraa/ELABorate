@@ -1,4 +1,4 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef Capacitor < Impedance
@@ -16,7 +16,7 @@ classdef Capacitor < Impedance
                 c = str2sym(string(capacitance));
             end
 
-            obj = obj@Impedance(id, anode, cathode, 1/(sym('s')*c));
+            obj = obj@Impedance(id, anode, cathode, sym('s')*c);
             obj.capacitance = c;
         end
         

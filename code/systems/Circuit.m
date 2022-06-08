@@ -1,4 +1,4 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef Circuit < Base_System
@@ -14,9 +14,12 @@ classdef Circuit < Base_System
         Indep_VSs = Indep_VS.empty;    Indep_ISs = Indep_IS.empty;
         Resistors = Resistor.empty;    Inductors = Inductor.empty;
         Capacitors = Capacitor.empty;  Ideal_OpAmps = Ideal_OpAmp.empty;
+        Generic_zs = Impedance.empty;
+        
         VCVSs = VCVS.empty;            CCCSs = CCCS.empty;
         VCCSs = VCCS.empty;            CCVSs = CCVS.empty;
         BJTs = BJT.empty;              MOSFETs = MOSFET.empty;
+        
         
         % Results.
         equations;
@@ -40,11 +43,12 @@ classdef Circuit < Base_System
         num_capacitors;  num_VCVSs;        num_VCCSs;      num_CCVSs; 
         num_CCCSs;       num_op_amps;      num_BJTs;       num_MOSFETs;
         num_Indep_Ss;    num_Dep_Ss;
+        num_generic_zs;
         
         % Combined element arrays.
         Elements = Element.empty;          Indep_Ss = Indep_S.empty;
-        Impedances = Impedance.empty;       Dep_Ss = Dep_S.empty;
-        Transistors = Transistor.empty;    
+        Transistors = Transistor.empty;    Dep_Ss = Dep_S.empty;
+        Impedances = Impedance.empty;
         
         % For calculations.
         of_interest; expressions; netlist;
@@ -81,6 +85,8 @@ classdef Circuit < Base_System
                         obj.Inductors(end+1) = Inductor(id, N1(i), N2(i), arg3{i});
                     case {'C'}
                         obj.Capacitors(end+1) = Capacitor(id, N1(i), N2(i), arg3{i});
+                    case {'Z'}
+                        obj.Impedances(end+1) = Impedance(id, N1(i), N2(i), arg3{i});
                     case {'E'}
                         obj.VCVSs(end+1) = VCVS(id, N1(i), N2(i), str2double(arg3{i}), ...
                             str2double(arg4{i}), arg5{i});
@@ -245,6 +251,8 @@ classdef Circuit < Base_System
                     obj.Inductors(end+1) = X;
                 case {'C'}
                     obj.Capacitors(end+1) = X;
+                case {'Z'}
+                    obj.Generic_zs(end+1) = X;
             end
             obj.update;
             obj.reset;
@@ -277,6 +285,7 @@ classdef Circuit < Base_System
             if     isa(X, 'Resistor'),  Xs = obj.Resistors;  obj.Resistors  = Xs(Xs ~= X);
             elseif isa(X, 'Inductor'),  Xs = obj.Inductors;  obj.Inductors  = Xs(Xs ~= X);
             elseif isa(X, 'Capacitor'), Xs = obj.Capacitors; obj.Capacitors = Xs(Xs ~= X);
+            elseif isa(X, 'Impedance'), Xs = obj.Generic_zs; obj.Generic_zs = Xs(Xs ~= X);
             elseif isa(X, 'Indep_VS'), Xs = obj.Indep_VSs; obj.Indep_VSs = Xs(Xs ~= X);
             elseif isa(X, 'Indep_IS'), Xs = obj.Indep_ISs; obj.Indep_ISs = Xs(Xs ~= X);
             elseif isa(X, 'VCVS'), Xs = obj.VCVSs; obj.VCVSs = Xs(Xs ~= X);
@@ -389,19 +398,21 @@ classdef Circuit < Base_System
         function update_nums(obj)
         % Check and update the number of each element in the circuit.
         
-            obj.num_Indep_VSs = length(obj.Indep_VSs);  obj.num_Indep_ISs = length(obj.Indep_ISs);
-            obj.num_resistors = length(obj.Resistors);  obj.num_capacitors = length(obj.Capacitors);
-            obj.num_inductors = length(obj.Inductors);  obj.num_op_amps = length(obj.Ideal_OpAmps);
-            obj.num_VCVSs = length(obj.VCVSs);          obj.num_VCCSs = length(obj.VCCSs);
-            obj.num_CCVSs = length(obj.CCVSs);          obj.num_CCCSs = length(obj.CCCSs);
-            obj.num_BJTs = length(obj.BJTs);            obj.num_MOSFETs = length(obj.MOSFETs);
+            obj.num_Indep_VSs = length(obj.Indep_VSs);   obj.num_Indep_ISs = length(obj.Indep_ISs);
+            obj.num_resistors = length(obj.Resistors);   obj.num_capacitors = length(obj.Capacitors);
+            obj.num_inductors = length(obj.Inductors);   obj.num_generic_zs = length(obj.Generic_zs);
+            obj.num_VCVSs = length(obj.VCVSs);           obj.num_VCCSs = length(obj.VCCSs);
+            obj.num_CCVSs = length(obj.CCVSs);           obj.num_CCCSs = length(obj.CCCSs);
+            obj.num_BJTs = length(obj.BJTs);             obj.num_MOSFETs = length(obj.MOSFETs);
+            obj.num_op_amps = length(obj.Ideal_OpAmps);
             
             obj.num_Indep_Ss = obj.num_Indep_VSs + obj.num_Indep_ISs;
             obj.num_Dep_Ss = obj.num_VCVSs + obj.num_CCVSs + obj.num_VCCSs + obj.num_CCCSs;
             obj.num_VSs = obj.num_Indep_VSs + obj.num_op_amps + obj.num_VCVSs + obj.num_CCVSs;
             obj.num_ISs = obj.num_Indep_ISs + obj.num_VCCSs + obj.num_CCCSs;
-            obj.num_impedances = obj.num_resistors + obj.num_inductors + obj.num_capacitors;
             obj.num_transistors = obj.num_BJTs + obj.num_MOSFETs;
+            obj.num_impedances = obj.num_generic_zs + obj.num_resistors ...
+                               + obj.num_inductors + obj.num_capacitors;
             
             obj.num_elements = obj.num_VSs + obj.num_ISs + obj.num_impedances + obj.num_transistors;
         end
@@ -410,10 +421,11 @@ classdef Circuit < Base_System
         % Update heterogeneous arrays.
         
             obj.Indep_Ss = [obj.Indep_VSs, obj.Indep_ISs];
-            obj.Impedances = [obj.Resistors, obj.Inductors, obj.Capacitors];
+            obj.Impedances = [obj.Generic_zs, obj.Resistors, obj.Inductors, obj.Capacitors];
             obj.Dep_Ss = [obj.VCVSs, obj.VCCSs, obj.CCVSs, obj.CCCSs];
             obj.Transistors = [obj.BJTs, obj.MOSFETs];
-            obj.Elements = [obj.Indep_Ss, obj.Impedances, obj.Dep_Ss, obj.Ideal_OpAmps, obj.Transistors];
+            obj.Elements = [obj.Indep_Ss, obj.Impedances, obj.Dep_Ss, ...
+                            obj.Ideal_OpAmps, obj.Transistors];
         end
     end
 

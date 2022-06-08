@@ -1,4 +1,4 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef Modeller
@@ -7,14 +7,19 @@ classdef Modeller
     
     methods(Static)
         
-        function obj = simplify(obj)
-        % Simplifies the given circuit object.
+        function obj = simplify(obj, z_eq)
+        % Simplifies the given circuit object to equivalent elements, 
+        % when pairs of equal class in series or parallels are found.
+        % If z_eq is true, any element with the superclass 'impedance'
+        % will be reduced to a generic impedance object.
             
+            if nargin < 2; z_eq = false; end
+
             obj.reset;
 
             while true
-                series_done = Modeller.simplify_series(obj);
-                parallel_done = Modeller.simplify_parallel(obj);
+                series_done = Modeller.simplify_series(obj, z_eq);
+                parallel_done = Modeller.simplify_parallel(obj, z_eq);
                 if series_done && parallel_done
                     break;
                 end
@@ -138,63 +143,27 @@ classdef Modeller
         % Returns the Thevenin-equivalent of the given circuit,
         % as seen by the given load.
 
-            % Load object is deleted upon envoking open().
-            load_id = load.id;
-            load_val = load.impedance;
-            
-            ports = load.terminals;
-            obj.open(load);
-            ELAB.evaluate(obj);
-            
-            if ports(1) == 0, v1 = 0;
-            else, v1 = rhs(obj.numerical_node_voltages(ports(1)));
-            end
-
-            if ports(2) == 0, v2 = 0;
-            else, v2 = rhs(obj.numerical_node_voltages(ports(2)));
-            end
-            
-            Modeller.remove_sources(obj);
-            Modeller.simplify(obj);
-            v_th = v1 - v2;
-            r_th = obj.Resistors(1).impedance;
+            [v_th, Z, load_id, load_val] = Modeller.equivalent(obj, load);
+            z_th = Z.impedance;
 
             obj.add(Indep_VS('Vth', 1, 0, 'DC', v_th));
-            obj.add(Resistor('Rth', 1, 2, r_th));
-            obj.open(obj.Resistors(1));
-            obj.add(Resistor(load_id, 2, 0, load_val));
+            obj.add(Impedance('Zth', 1, 2, z_th));
+            obj.remove(Z);
+            obj.add(Impedance(load_id, 2, 0, load_val));
         end
         
         function obj = norton(obj, load)
         % Returns the Norton-equivalent of the given circuit,
         % as seen by the given load.
             
-            % Load object is deleted upon envoking open().
-            load_id = load.id;
-            load_val = load.impedance;
-
-            ports = load.terminals;
-            obj.open(load);
-            ELAB.evaluate(obj);
-            
-            if ports(1) == 0, v1 = 0;
-            else, v1 = rhs(obj.numerical_node_voltages(ports(1)));
-            end
-
-            if ports(2) == 0, v2 = 0;
-            else, v2 = rhs(obj.numerical_node_voltages(ports(2)));
-            end
-            
-            Modeller.remove_sources(obj);
-            Modeller.simplify(obj);
-            v_th = v1 - v2;
-            r_th = obj.Resistors(1).impedance;
-            i_no = v_th / r_th;
+            [v_th, Z, load_id, load_val] = Modeller.equivalent(obj, load);
+            z_th = Z.impedance;
+            i_no = v_th / z_th;
             
             obj.add(Indep_IS('Ino', 1, 0, 'DC', i_no));
-            obj.add(Resistor('Rno', 1, 0, r_th));
-            obj.open(obj.Resistors(1));
-            obj.add(Resistor(load_id, 1, 0, load_val));
+            obj.add(Impedance('Zno', 1, 0, z_th));
+            obj.remove(Z);
+            obj.add(Impedance(load_id, 1, 0, load_val));
         end
 
         function obj = hybrid_pi(obj, freq)
@@ -306,6 +275,7 @@ classdef Modeller
                 Modeller.check_shared(obj.Resistors, X1, X2, shared) || ...
                 Modeller.check_shared(obj.Inductors, X1, X2, shared) || ...
                 Modeller.check_shared(obj.Capacitors, X1, X2, shared) || ...
+                Modeller.check_shared(obj.Generic_zs, X1, X2, shared) || ...
                 Modeller.check_shared(obj.VCVSs, X1, X2, shared) || ...
                 Modeller.check_shared(obj.VCCSs, X1, X2, shared) || ...
                 Modeller.check_shared(obj.CCVSs, X1, X2, shared) || ...
@@ -316,11 +286,12 @@ classdef Modeller
                 bool = false;
             end
         end
+
     end
     
     methods(Static, Access = private)
         
-        function done = simplify_parallel(obj)
+        function done = simplify_parallel(obj, z_eq)
         % Simplifies parallel elements of same type and returns how many pairs were found.
             
             done = true;
@@ -365,9 +336,19 @@ classdef Modeller
                     obj.remove(I(1)); obj.remove(I(2)); done = false;
                 end
             end
+
+            if z_eq
+                Z = Modeller.find_parallel(obj, obj.Impedances);
+                if ~isempty(Z)
+                    %disp(['Parallel found: ', Z(1).id, '||', Z(2).id]);
+                    eq = simplify(Z(1).impedance * Z(2).impedance / (Z(1).impedance + Z(2).impedance));
+                    obj.Generic_zs(end+1) = Impedance('Zeq', Z(1).anode, Z(1).cathode, eq);
+                    obj.remove(Z(1)); obj.remove(Z(2)); done = false;
+                end
+            end
         end
 
-        function done = simplify_series(obj)
+        function done = simplify_series(obj, z_eq)
         % Simplifies series elements of same type and returns how many pairs were found.
             
             done = true;
@@ -375,21 +356,25 @@ classdef Modeller
             R = Modeller.find_series(obj, obj.Resistors);
             if ~isempty(R)
                 eq = simplify(R(1).resistance + R(2).resistance);
-                obj.Resistors(end+1) = Resistor('Req', R(1).anode, R(1).cathode, eq);
+                n = Modeller.unique_nodes(R(1), R(2));
+                obj.Resistors(end+1) = Resistor('Req', n(2), n(1), eq);
                 obj.remove(R(1)); obj.short(R(2)); done = false;
             end
             
             L = Modeller.find_series(obj, obj.Inductors);
             if ~isempty(L)
                 eq = simplify(L(1).inductance + L(2).inductance);
-                obj.Inductors(end+1) = Inductor('Leq', L(1).anode, L(1).cathode, eq);
+                n = Modeller.unique_nodes(L(1), L(2));
+                obj.Inductors(end+1) = Inductor('Leq', n(2), n(1), eq);
                 obj.remove(L(1)); obj.short(L(2)); done = false;
             end
 
             C = Modeller.find_series(obj, obj.Capacitors);
             if ~isempty(C)
-                eq = simplify(C(1).capacitance * C(2).capacitance / (C(1).capacitance + C(2).capacitance));
-                obj.Capacitors(end+1) = Capacitor('Ceq', C(1).anode, C(1).cathode, eq);
+                eq = simplify(C(1).capacitance * C(2).capacitance / ...
+                    (C(1).capacitance + C(2).capacitance));
+                n = Modeller.unique_nodes(C(1), C(2));
+                obj.Capacitors(end+1) = Capacitor('Ceq', n(2), n(1), eq);
                 obj.remove(C(1)); obj.short(C(2)); done = false;
             end
             
@@ -398,8 +383,20 @@ classdef Modeller
                 if V(1).is_AC == V(2).is_AC
                     eq = V(1).voltage + V(2).voltage;
                     if V(1).is_AC, type = 'AC'; else, type = 'DC'; end
-                    obj.Indep_VSs(end+1) = Indep_VS('Veq', V(1).anode, V(1).cathode, type, eq);
+                    n = Modeller.unique_nodes(V(1), V(2));
+                    obj.Indep_VSs(end+1) = Indep_VS('Veq', n(2), n(1), type, eq);
                     obj.remove(V(1)); obj.short(V(2)); done = false;
+                end
+            end
+
+            if z_eq
+                Z = Modeller.find_series(obj, obj.Impedances);
+                if ~isempty(Z)
+                    %disp(['Series found: ', Z(1).id, '+', Z(2).id]);
+                    eq = simplify(Z(1).impedance + Z(2).impedance);
+                    n = Modeller.unique_nodes(Z(1), Z(2));
+                    obj.Generic_zs(end+1) = Impedance('Zeq', n(2), n(1), eq);
+                    obj.remove(Z(1)); obj.short(Z(2)); done = false;
                 end
             end
         end
@@ -442,6 +439,7 @@ classdef Modeller
             Modeller.rename_eqs(obj.Resistors);
             Modeller.rename_eqs(obj.Inductors);
             Modeller.rename_eqs(obj.Capacitors);
+            Modeller.rename_eqs(obj.Generic_zs);
             Modeller.rename_eqs(obj.Indep_VSs);
             Modeller.rename_eqs(obj.Indep_ISs);
         end
@@ -475,6 +473,39 @@ classdef Modeller
                     end
                 end
             end
+        end
+    
+        function nodes = unique_nodes(X1, X2)
+        % Return the nodes, which will connect a new equivalent element 
+        % to the rest of the circuit, i.e. the unique nodes.
+
+            L = [X1.terminals, X2.terminals];
+            uL = unique(L);
+            nodes = uL(histcounts(L,[uL,inf])==1);
+        end
+    
+        function [v_th, Z, load_id, load_val] = equivalent(obj, load)
+        % Load object is deleted upon envoking open().
+
+            load_id = load.id;
+            load_val = load.impedance;
+
+            ports = load.terminals;
+            obj.open(load);
+            ELAB.evaluate(obj);
+            
+            if ports(1) == 0, v1 = 0;
+            else, v1 = rhs(obj.numerical_node_voltages(ports(1)));
+            end
+
+            if ports(2) == 0, v2 = 0;
+            else, v2 = rhs(obj.numerical_node_voltages(ports(2)));
+            end
+            
+            Modeller.remove_sources(obj);
+            Modeller.simplify(obj, true);
+            v_th = v1 - v2;
+            Z = obj.Impedances(1);
         end
     end
 end

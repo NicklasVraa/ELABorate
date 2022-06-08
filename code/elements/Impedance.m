@@ -1,4 +1,4 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef Impedance < Element
@@ -36,11 +36,11 @@ classdef Impedance < Element
             obj.cathode = obj.terminals(2);
         end
         
-         function str = to_net(obj)
-             str = sprintf('%s %s %s %s\n', ...
-                 obj.id, num2str(obj.anode), num2str(obj.cathode), ...
-                 strrep(string(obj.impedance),' ',''));
-         end
+        function str = to_net(obj)
+            str = sprintf('%s %s %s %s\n', ...
+                obj.id, num2str(obj.anode), num2str(obj.cathode), ...
+                strrep(string(obj.impedance),' ',''));
+        end
     end
 end
 

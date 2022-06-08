@@ -1,4 +1,4 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef Inductor < Impedance
@@ -16,7 +16,7 @@ classdef Inductor < Impedance
                 l = str2sym(string(inductance));
             end
 
-            obj = obj@Impedance(id, anode, cathode, sym('s')*l);
+            obj = obj@Impedance(id, anode, cathode, 1/(sym('s')*l));
             obj.inductance = l;
         end
         

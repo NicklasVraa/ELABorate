@@ -1,4 +1,4 @@
-% Part of ELABorate™, all rights reserved.
+% Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
 classdef Analyzer
@@ -35,6 +35,7 @@ classdef Analyzer
                 if     isa(X, 'Resistor'), g = ['1/' X.id];
                 elseif isa(X, 'Inductor'), g = ['1/s/' X.id];
                 elseif isa(X, 'Capacitor'), g = ['s*' X.id];
+                elseif isa(X, 'Impedance'), g = ['1/' X.id];
                 end
                 
                 if X.anode == 0
@@ -499,12 +500,6 @@ classdef Analyzer
                 fprintf('\nNatural frequency  = |%f%+fj|\n', real(p(1)), imag(p(1)));
                 fprintf('Damping ratio zeta = -cos(angle(%f%+fj))\n', real(p(1)), imag(p(1)));
             end
-        end
-        
-        function classify(G, show)
-        % Compound function, which calls a classification-type functions.
-        
-            if nargin < 2; show = false; end
         end
     
         function N = period(x)
