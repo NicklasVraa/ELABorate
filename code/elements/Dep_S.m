@@ -9,4 +9,3 @@ classdef (Abstract) Dep_S < Element
         v_across; i_through;
     end
 end
-

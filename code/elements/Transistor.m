@@ -10,7 +10,7 @@ classdef (Abstract) Transistor < Element
     end
     
     methods(Abstract)
-        internal(obj)
+        % internal(obj)
     end
 end
 

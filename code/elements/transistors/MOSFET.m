@@ -43,13 +43,6 @@ classdef MOSFET < Transistor
                      obj.source_node == node];
         end
         
-        function internal(obj)
-            fprintf('%s, Internal params:\n', obj.id);
-            fprintf('- Gate resistance   (R_bb): %s\n', obj.R_gg);
-            fprintf('- Drain resistance  (R_cc): %s\n', obj.R_dd);
-            fprintf('- Source resistance (R_ee): %s\n', obj.R_ss);
-        end
-        
         function update_terminals(obj, index, value)
             obj.terminals(index) = value;
             obj.gate_node = obj.terminals(1);

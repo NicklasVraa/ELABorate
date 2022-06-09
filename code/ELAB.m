@@ -19,4 +19,3 @@ classdef ELAB < Analyzer & Modeller & Visualizer & Transmuter
         end
     end
 end
-

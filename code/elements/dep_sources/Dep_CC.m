@@ -31,4 +31,3 @@ classdef (Abstract) Dep_CC < Dep_S
         end
     end
 end
-

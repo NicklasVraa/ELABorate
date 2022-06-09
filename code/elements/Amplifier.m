@@ -1,7 +1,7 @@
 % Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
-classdef Amplifier < Element
+classdef (Abstract) Amplifier < Element
 % The basis for all transistor variations (BJT, MOSFET).
     
     properties
@@ -9,4 +9,3 @@ classdef Amplifier < Element
         num_terminals = 3;
     end
 end
-

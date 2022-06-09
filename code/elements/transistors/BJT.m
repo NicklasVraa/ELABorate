@@ -43,13 +43,6 @@ classdef BJT < Transistor
                      obj.emitter_node == node];
         end
         
-        function internal(obj)
-            fprintf('%s, Internal params:\n', obj.id);
-            fprintf('- Base resistance  (R_bb): %s\n', obj.R_bb);
-            fprintf('- Coll. resistance (R_cc): %s\n', obj.R_cc);
-            fprintf('- Emit. resistance (R_ee): %s\n', obj.R_ee);
-        end
-        
         function update_terminals(obj, index, value)
             obj.terminals(index) = value;
             obj.base_node = obj.terminals(1);
