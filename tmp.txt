@@ -1,0 +1,7 @@
+Vi 0 1 AC Vi
+RB 1 2 RB
+RC 3 0 RC
+R_pi_Q1 2 0 R_pi_Q1
+R_o_Q1 3 0 R_o_Q1
+G_Q1 3 0 0 2 
+ 

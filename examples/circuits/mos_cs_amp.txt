@@ -1,6 +1,6 @@
-Vi 1 0 AC
-VDD 3 0 DC
-RD 2 3
-RG 1 2
-M1 1 2 0 100
-RL 2 0
+V_i 1 0 AC
+V_DD 3 0 DC
+R_D 2 3
+R_G 1 2
+M_1 1 2 0 100
+R_L 2 0

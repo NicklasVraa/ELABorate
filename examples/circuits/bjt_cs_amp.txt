@@ -1,6 +1,6 @@
-VBB 0 1 DC
-VCC 5 0 DC
-Vi 1 2 AC
-RB 2 3
-Q1 3 4 0
-RC 4 5
+V_BB 1 0 DC
+V_CC 5 0 DC
+V_i 2 1 AC
+R_B 2 3
+Q_1 3 4 0
+R_C 4 5

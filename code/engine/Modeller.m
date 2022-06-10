@@ -152,8 +152,8 @@ classdef Modeller
             [v_th, Z] = Modeller.equivalent(obj, load);
             z_th = Z.impedance;
 
-            obj.add(Indep_VS('Vth', 1, 0, 'DC', v_th));
-            obj.add(Impedance('Zth', 1, 2, z_th));
+            obj.add(Indep_VS('V_th', 1, 0, 'DC', v_th));
+            obj.add(Impedance('Z_th', 1, 2, z_th));
             obj.remove(Z);
 
             Z_L.update_terminals(1, 2);
@@ -171,8 +171,8 @@ classdef Modeller
             z_th = Z.impedance;
             i_no = v_th / z_th;
             
-            obj.add(Indep_IS('Ino', 1, 0, 'DC', i_no));
-            obj.add(Impedance('Zno', 1, 0, z_th));
+            obj.add(Indep_IS('I_no', 1, 0, 'DC', i_no));
+            obj.add(Impedance('Z_no', 1, 0, z_th));
             obj.remove(Z);
 
             Z_L.update_terminals(1, 1);
@@ -195,9 +195,9 @@ classdef Modeller
                 R_o = Resistor(id, M.drain_node, M.source_node, id);
                 obj.Resistors(end+1) = R_o;
 
-                id = sprintf('G_m_%s', M.id);
-                G_m = VCCS(id, M.drain_node, M.source_node, M.source_node, M.gate_node, id);
-                obj.VCCSs(end+1) = G_m;
+                id = sprintf('G_%s', M.id);
+                G = VCCS(id, M.drain_node, M.source_node, M.source_node, M.gate_node, id);
+                obj.VCCSs(end+1) = G;
                 
                 if freq == "hf" % High frequency model.
                     id = sprintf('C_pi_%s', M.id);
@@ -224,9 +224,9 @@ classdef Modeller
                 R_o = Resistor(id, Q.collector_node, Q.emitter_node, id);
                 obj.Resistors(end+1) = R_o;
 
-                id = sprintf('G_m_%s', Q.id);
-                G_m = VCCS(id, Q.collector_node, Q.emitter_node, Q.emitter_node, Q.base_node, id);
-                obj.VCCSs(end+1) = G_m;
+                id = sprintf('G_%s', Q.id);
+                G = VCCS(id, Q.collector_node, Q.emitter_node, Q.emitter_node, Q.base_node, id);
+                obj.VCCSs(end+1) = G;
 
                 if freq == "hf" % High frequency model.
                     id = sprintf('C_pi_%s', Q.id);
@@ -313,21 +313,21 @@ classdef Modeller
             R = Modeller.find_parallel(obj, obj.Resistors);
             if ~isempty(R)
                 eq = simplify(R(1).resistance * R(2).resistance / (R(1).resistance + R(2).resistance));
-                obj.Resistors(end+1) = Resistor('Req', R(1).anode, R(1).cathode, eq);
+                obj.Resistors(end+1) = Resistor('R_eq', R(1).anode, R(1).cathode, eq);
                 obj.remove(R(1)); obj.remove(R(2)); done = false;
             end
             
             L = Modeller.find_parallel(obj, obj.Inductors);
             if ~isempty(L)
                 eq = simplify(L(1).inductance * L(2).inductance / (L(1).inductance + L(2).inductance));
-                obj.Inductors(end+1) = Inductor('Leq', L(1).anode, L(1).cathode, eq);
+                obj.Inductors(end+1) = Inductor('L_eq', L(1).anode, L(1).cathode, eq);
                 obj.remove(L(1)); obj.remove(L(2)); done = false;
             end
 
             C = Modeller.find_parallel(obj, obj.Capacitors);
             if ~isempty(C)
                 eq = simplify(C(1).capacitance + C(2).capacitance);
-                obj.Capacitors(end+1) = Capacitor('Ceq', C(1).anode, C(1).cathode, eq);
+                obj.Capacitors(end+1) = Capacitor('C_eq', C(1).anode, C(1).cathode, eq);
                 obj.remove(C(1)); obj.remove(C(2)); done = false;
             end
             
@@ -336,7 +336,7 @@ classdef Modeller
                 if V(1).voltage == V(2).voltage && V(1).is_AC == V(2).is_AC % Same type.
                     eq = V(1).voltage;
                     if V(1).is_AC, type = 'AC'; else, type = 'DC'; end
-                    obj.Indep_VSs(end+1) = Indep_VS('Veq', V(1).anode, V(1).cathode, type, eq);
+                    obj.Indep_VSs(end+1) = Indep_VS('V_eq', V(1).anode, V(1).cathode, type, eq);
                     obj.remove(V(1)); obj.remove(V(2)); done = false;
                 end
             end
@@ -346,7 +346,7 @@ classdef Modeller
                 if I(1).is_AC == I(2).is_AC
                     eq = I(1).current + I(2).current;
                     if I(1).is_AC, type = 'AC'; else, type = 'DC'; end
-                    obj.Indep_ISs(end+1) = Indep_IS('Ieq', I(1).anode, I(1).cathode, type, eq);
+                    obj.Indep_ISs(end+1) = Indep_IS('I_eq', I(1).anode, I(1).cathode, type, eq);
                     obj.remove(I(1)); obj.remove(I(2)); done = false;
                 end
             end
@@ -356,7 +356,7 @@ classdef Modeller
                 if ~isempty(Z)
                     %disp(['Parallel found: ', Z(1).id, '||', Z(2).id]);
                     eq = simplify(Z(1).impedance * Z(2).impedance / (Z(1).impedance + Z(2).impedance));
-                    obj.Generic_zs(end+1) = Impedance('Zeq', Z(1).anode, Z(1).cathode, eq);
+                    obj.Generic_zs(end+1) = Impedance('Z_eq', Z(1).anode, Z(1).cathode, eq);
                     obj.remove(Z(1)); obj.remove(Z(2)); done = false;
                 end
             end
@@ -371,7 +371,7 @@ classdef Modeller
             if ~isempty(R)
                 eq = simplify(R(1).resistance + R(2).resistance);
                 n = Modeller.unique_nodes(R(1), R(2));
-                obj.Resistors(end+1) = Resistor('Req', n(2), n(1), eq);
+                obj.Resistors(end+1) = Resistor('R_eq', n(2), n(1), eq);
                 obj.remove(R(1)); obj.short(R(2)); done = false;
             end
             
@@ -379,7 +379,7 @@ classdef Modeller
             if ~isempty(L)
                 eq = simplify(L(1).inductance + L(2).inductance);
                 n = Modeller.unique_nodes(L(1), L(2));
-                obj.Inductors(end+1) = Inductor('Leq', n(2), n(1), eq);
+                obj.Inductors(end+1) = Inductor('L_eq', n(2), n(1), eq);
                 obj.remove(L(1)); obj.short(L(2)); done = false;
             end
 
@@ -388,7 +388,7 @@ classdef Modeller
                 eq = simplify(C(1).capacitance * C(2).capacitance / ...
                     (C(1).capacitance + C(2).capacitance));
                 n = Modeller.unique_nodes(C(1), C(2));
-                obj.Capacitors(end+1) = Capacitor('Ceq', n(2), n(1), eq);
+                obj.Capacitors(end+1) = Capacitor('C_eq', n(2), n(1), eq);
                 obj.remove(C(1)); obj.short(C(2)); done = false;
             end
             
@@ -398,7 +398,7 @@ classdef Modeller
                     eq = V(1).voltage + V(2).voltage;
                     if V(1).is_AC, type = 'AC'; else, type = 'DC'; end
                     n = Modeller.unique_nodes(V(1), V(2));
-                    obj.Indep_VSs(end+1) = Indep_VS('Veq', n(2), n(1), type, eq);
+                    obj.Indep_VSs(end+1) = Indep_VS('V_eq', n(2), n(1), type, eq);
                     obj.remove(V(1)); obj.short(V(2)); done = false;
                 end
             end
@@ -409,7 +409,7 @@ classdef Modeller
                     %disp(['Series found: ', Z(1).id, '+', Z(2).id]);
                     eq = simplify(Z(1).impedance + Z(2).impedance);
                     n = Modeller.unique_nodes(Z(1), Z(2));
-                    obj.Generic_zs(end+1) = Impedance('Zeq', n(2), n(1), eq);
+                    obj.Generic_zs(end+1) = Impedance('Z_eq', n(2), n(1), eq);
                     obj.remove(Z(1)); obj.short(Z(2)); done = false;
                 end
             end
@@ -464,9 +464,9 @@ classdef Modeller
             eqs = 0;
             for index = 1:length(Xs)
                 X = Xs(index);
-                if strcmp(X.id(2:end), 'eq')
+                if strcmp(X.id(2:end), '_eq')
                     eqs = eqs + 1;
-                    X.id = sprintf('%seq%d', X.id(1), eqs);
+                    X.id = sprintf('%s_eq%d', X.id(1), eqs);
                 end
             end
         end
