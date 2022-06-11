@@ -125,30 +125,46 @@ classdef Analyzer
                     case {'0000', '0001',  '0010', '0011', '0100', '1000', '1100'}
                         error('Invalid VCCS configuration.');
                     case '1111' % If nothing is grounded.
-                        G{VCCS.anode,   VCCS.ctrl_anode}   = [G{VCCS.anode,   VCCS.ctrl_anode}   ' + ' VCCS.id];
-                        G{VCCS.anode,   VCCS.ctrl_cathode} = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
-                        G{VCCS.cathode, VCCS.ctrl_anode}   = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
-                        G{VCCS.cathode, VCCS.ctrl_cathode} = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
+                        G{VCCS.anode,   VCCS.ctrl_anode} ...
+                            = [G{VCCS.anode,   VCCS.ctrl_anode}   ' + ' VCCS.id];
+                        G{VCCS.anode,   VCCS.ctrl_cathode} ...
+                            = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_anode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_cathode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
                     case '0111' % If only anode is grounded.
-                        G{VCCS.cathode, VCCS.ctrl_anode}   = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
-                        G{VCCS.cathode, VCCS.ctrl_cathode} = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_anode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_cathode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
                     case '0101' % If only anodes and control anode are grounded.
-                        G{VCCS.cathode, VCCS.ctrl_cathode} = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_cathode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
                     case '0110' % If only anode and control cathode are grounded.
-                        G{VCCS.cathode, VCCS.ctrl_anode}   = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_anode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
                     case '1011' % If only cathode is grounded.
-                        G{VCCS.anode,   VCCS.ctrl_anode}   = [G{VCCS.anode,   VCCS.ctrl_anode}   ' + ' VCCS.id];
-                        G{VCCS.anode,   VCCS.ctrl_cathode} = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
+                        G{VCCS.anode,   VCCS.ctrl_anode} ...
+                            = [G{VCCS.anode,   VCCS.ctrl_anode}   ' + ' VCCS.id];
+                        G{VCCS.anode,   VCCS.ctrl_cathode} ...
+                            = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
                     case '1001' % If only cathode and control anode are grounded.
-                        G{VCCS.anode,   VCCS.ctrl_cathode} = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
+                        G{VCCS.anode,   VCCS.ctrl_cathode} ...
+                            = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
                     case '1010' % If only both cathodes are grounded.
-                        G{VCCS.anode,   VCCS.ctrl_anode}   = [G{VCCS.anode,   VCCS.ctrl_anode}   ' + ' VCCS.id];
+                        G{VCCS.anode,   VCCS.ctrl_anode} ...
+                            = [G{VCCS.anode,   VCCS.ctrl_anode}   ' + ' VCCS.id];
                     case '1101' % If only control anode is grounded.
-                        G{VCCS.anode,   VCCS.ctrl_cathode} = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
-                        G{VCCS.cathode, VCCS.ctrl_cathode} = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
-                    case '1110' % If only control cathode is grounded. (MAYBE anode instead of cathode)
-                        G{VCCS.anode,   VCCS.ctrl_anode}   = [G{VCCS.cathode, VCCS.ctrl_anode}   ' + ' VCCS.id];
-                        G{VCCS.cathode, VCCS.ctrl_anode}   = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
+                        G{VCCS.anode,   VCCS.ctrl_cathode} ...
+                            = [G{VCCS.anode,   VCCS.ctrl_cathode} ' - ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_cathode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_cathode} ' + ' VCCS.id];
+                    case '1110' % If only control cathode is grounded.
+                        G{VCCS.anode,   VCCS.ctrl_anode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_anode}   ' + ' VCCS.id];
+                        G{VCCS.cathode, VCCS.ctrl_anode} ...
+                            = [G{VCCS.cathode, VCCS.ctrl_anode}   ' - ' VCCS.id];
                 end
             end
 
@@ -183,10 +199,12 @@ classdef Analyzer
                 ctrl_voltage_index = find(contains(j, ctrl_voltage));
 
                 if (CCCS.anode ~= 0)
-                    B{CCCS.anode, ctrl_voltage_index} = [B{CCCS.anode, ctrl_voltage_index} ' + ' CCCS.id];
+                    B{CCCS.anode, ctrl_voltage_index} ...
+                        = [B{CCCS.anode, ctrl_voltage_index} ' + ' CCCS.id];
                 end
                 if (CCCS.cathode ~= 0)
-                    B{CCCS.cathode, ctrl_voltage_index} = [B{CCCS.cathode, ctrl_voltage_index} ' - ' CCCS.id];
+                    B{CCCS.cathode, ctrl_voltage_index} ...
+                        = [B{CCCS.cathode, ctrl_voltage_index} ' - ' CCCS.id];
                 end
             end
 

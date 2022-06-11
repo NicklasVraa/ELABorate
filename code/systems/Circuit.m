@@ -339,8 +339,8 @@ classdef Circuit < Base_System
         
             obj.symbolic_node_voltages = [];      obj.symbolic_source_currents = [];
             obj.symbolic_element_voltages = [];   obj.symbolic_element_currents = [];
-            obj.symbolic_transfer_function = [];  obj.numerical_node_voltages = [];                
-            obj.numerical_source_currents = [];   obj.numerical_transfer_function = [];            
+            obj.symbolic_transfer_function = [];  obj.numerical_node_voltages = [];
+            obj.numerical_source_currents = [];   obj.numerical_transfer_function = [];
             obj.numerical_element_voltages = [];  obj.numerical_element_currents = [];
             obj.equations = [];
             
