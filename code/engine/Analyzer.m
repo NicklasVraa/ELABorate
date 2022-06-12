@@ -70,14 +70,20 @@ classdef Analyzer
             % Independent current sources (I).
             for index = 1:obj.num_Indep_ISs
                 I = obj.Indep_ISs(index);
-                if I.anode ~= 0, i{I.anode} = [i{I.anode} ' - ' I.id]; end
-                if I.cathode ~= 0, i{I.cathode} = [i{I.cathode} ' + ' I.id]; end
+
+                if I.anode ~= 0
+                    i{I.anode} = [i{I.anode} ' - ' I.id];
+                end
+                if I.cathode ~= 0
+                    i{I.cathode} = [i{I.cathode} ' + ' I.id];
+                end
             end
 
             % Op-amps (O).
             for index = 1:obj.num_op_amps
                 O = obj.Ideal_OpAmps(index);
                 num_vs_parsed = num_vs_parsed + 1;
+
                 B{O.output, num_vs_parsed} = [B{O.output, num_vs_parsed} ' + 1'];
 
                 if O.input_1 ~= 0
@@ -117,6 +123,7 @@ classdef Analyzer
             % Voltage Controlled Current Sources, VCCS (G).
             for index = 1:obj.num_VCCSs
                 VCCS = obj.VCCSs(index);
+
                 pattern = num2str([VCCS.anode ~= 0, VCCS.cathode ~= 0, ...
                     VCCS.ctrl_anode ~= 0, VCCS.ctrl_cathode ~= 0]);
                 pattern = pattern(~isspace(pattern));
@@ -341,18 +348,11 @@ classdef Analyzer
             obj.numerical_transfer_found = true;
             fprintf('Transfer function object created successfully (%s sec).\n', toc);
         end
-        
-        function out = apply(TF, input)
-        % Apply a signal to a circuit transfer function.
-        
-            out_s = TF * ELAB.transmute(input, 'td', 'tf');
-            syms t;
-            out = ELAB.transmute(out_s, 'tf', 'td') * heaviside(t);
-        end
 
         function RA = routh(poly_coeffs, show, epsilon)
         % Takes the coefficients of a characteristic equation of a system 
         % and returns the Routh array for stability analysis.
+            
             if nargin < 2; show = false; end
             if nargin < 3; syms epsilon; end
 

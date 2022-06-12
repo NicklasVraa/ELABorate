@@ -1,8 +1,7 @@
 # **Plan**
 
-**Code**:
-- Check code for dependent sources, specifically how the gain value is set. Now, it's just the name of the element.
-- Input- and output resistances.
-
 **Report**:
-- Add examples from Linear Circuits: Laplace Transforms.
+- Finish section on implementation - stability.
+- Finish section on results - stability.
+- Finish section on conclusion and future additions.
+- Submit til EE subreddit.
