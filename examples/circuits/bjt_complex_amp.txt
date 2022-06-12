@@ -1,9 +1,9 @@
-Vcc 4 0 DC
-Vs  1 0 AC
-Rc  4 5
-R1  4 3
-R2  3 0
-Rs  1 2
-Cs  2 3
-Re  6 0
-Q1  3 5 6 100
+V_cc 4 0 DC
+V_s 1 0 AC
+R_c 4 5
+R_1 4 3
+R_2 3 0
+R_s 1 2
+C_s 2 3
+R_e 6 0
+Q_1 3 5 6 100
