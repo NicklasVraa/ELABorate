@@ -2,40 +2,29 @@
 % Auth: Nicklas Vraa
 
 classdef MOSFET < Transistor
-% Metal Oxide Semiconductor Field Effect Transistor.
+% Metal Oxide Semiconductor Field Effect Transistor (CMOS).
     
     properties
         gate_node; drain_node; source_node;
-        R_gg; R_dd; R_ss; % Optional internal resistances.
+
+        % May be changed directly by the user.
+        V_GS = 0.8; % Threshold voltage.
+        K_c = 5;    % mA/V^2.
     end
     
     methods
-        function obj = MOSFET(id, G, D, S, gain_val, R_gg, R_dd, R_ss)
-            obj.id = id;
+        function obj = MOSFET(id, G, D, S, beta)
+            obj = obj@Transistor(id, beta);
             obj.gate_node = G;
             obj.drain_node = D;
-            obj.source_node = S;
-            obj.gain = sym(sprintf('beta_%s', id));
-            
-            if isempty(gain_val), obj.gain_val = obj.gain;
-            else, obj.gain_val = sym(gain_val); end
-            
-            if isempty(R_gg), obj.R_gg = sym(sprintf('R_gg_%s', id));
-            else, obj.R_gg = sym(R_gg); end
-            
-            if isempty(R_dd), obj.R_dd = sym(sprintf('R_dd_%s', id));
-            else, obj.R_dd = sym(R_dd); end
-            
-            if isempty(R_ss), obj.R_ss = sym(sprintf('R_ss_%s', id));
-            else, obj.R_ss = sym(R_ss); end
-            
+            obj.source_node = S;  
             obj.terminals = [obj.gate_node, obj.drain_node, obj.source_node];
         end
         
         function str = to_net(obj)
             str = sprintf('%s %s %s %s %s\n', ...
                 obj.id, num2str(obj.gate_node), num2str(obj.drain_node), ...
-                num2str(obj.source_node), obj.gain_val);
+                num2str(obj.source_node), obj.beta);
         end
         
         function bools = is_connected(obj, node)
@@ -52,7 +41,7 @@ classdef MOSFET < Transistor
 
         function cloned = clone(obj)
             cloned = MOSFET(obj.id, obj.gate_node, obj.drain_node, ...
-                obj.source_node, obj.gain);
+                obj.source_node, obj.beta);
         end
     end
 end

@@ -7,6 +7,7 @@ classdef (Abstract) Indep_S < Element
     
     properties
         is_AC;
+        v_across; i_through;
         anode; cathode;
         num_terminals = 2;       
     end

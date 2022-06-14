@@ -1,7 +1,7 @@
 % Part of ELABorate, all rights reserved.
 % Auth: Nicklas Vraa
 
-classdef (Abstract) Base_System < handle % & matlab.mixin.Heterogeneous
+classdef (Abstract) Base_System < handle
 % The basis of all ELABorate's system classes.
     
     properties

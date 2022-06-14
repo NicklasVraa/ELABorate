@@ -179,8 +179,40 @@ classdef Modeller
             Z_L.update_terminals(2, 0);
             obj.add(Z_L); % Add load back.
         end
+        
+        function orig = biasing(obj)
+        % Determine the biasing current for a transistor.
+            
+            orig = obj.clone;
+            obj = Modeller.dc_eq(obj);
 
-        function obj = hybrid_pi(obj, freq)
+            % Replace all BJTs with a negative voltage source,
+            % representing a voltage drop, and store references.
+            V_BEs = Indep_VS.empty;
+            for index = 1:obj.num_BJTs
+                X = obj.BJTs(index);
+
+                id = sprintf('V_BE_%s', X.id);
+                V_BE = Indep_VS(id, X.base_node, X.emitter_node, 'DC', X.V_BE);
+                V_BEs = [V_BEs, V_BE];
+                obj.Indep_VSs(end+1) = V_BE;
+                    
+                obj.remove(obj.BJTs(index))
+            end
+
+            ELAB.evaluate(obj)
+            
+            % Display all currents through the new sources.
+            biasing_currents = obj.numerical_source_currents(end-length(V_BEs)+1:end);
+            disp(vpa(biasing_currents, 2));
+ 
+            for index = 1:length(V_BEs)
+                X = orig.BJTs(index);
+                X.biasing = rhs(biasing_currents(index));
+            end
+        end
+
+        function obj = hybrid_pi(obj, freq, early)
         % Replace all transistors with their low/high-frequency-hybrid-pi model.
             
             % Short DC-VS's and open DC-CS's.
@@ -214,19 +246,27 @@ classdef Modeller
 
             for index = 1:obj.num_BJTs
                 Q = obj.BJTs(index);
+                
+                % Create id's for new elements.
+                G_id = sprintf('G_%s', Q.id);
+                R_pi_id = sprintf('R_pi_%s', Q.id);
+                
+                % Get biasing information, if available.
+                if ~isempty(Q.biasing)
+                    I_C = Q.beta * Q.biasing;
+                    gm = vpa(I_C / Q.V_T);
+                    r_pi = vpa(Q.beta / gm);
+                else
+                    gm = G_id;
+                    r_pi = R_pi_id;
+                end
 
-                % Add new elements.
-                id = sprintf('R_pi_%s', Q.id);
-                R_pi = Resistor(id, Q.base_node, Q.emitter_node, id);
-                obj.Resistors(end+1) = R_pi;
-
-                id = sprintf('R_o_%s', Q.id);
-                R_o = Resistor(id, Q.collector_node, Q.emitter_node, id);
-                obj.Resistors(end+1) = R_o;
-
-                id = sprintf('G_%s', Q.id);
-                G = VCCS(id, Q.collector_node, Q.emitter_node, Q.emitter_node, Q.base_node, id);
+                % Add new elements.             
+                G = VCCS(G_id, Q.collector_node, Q.emitter_node, Q.base_node, Q.emitter_node, gm);
                 obj.VCCSs(end+1) = G;
+                
+                R_pi = Resistor(R_pi_id, Q.base_node, Q.emitter_node, r_pi);
+                obj.Resistors(end+1) = R_pi;
 
                 if freq == "hf" % High frequency model.
                     id = sprintf('C_pi_%s', Q.id);
@@ -240,6 +280,12 @@ classdef Modeller
                     id = sprintf('C_mu_%s', Q.id);
                     C_mu = Capacitor(id, Q.base_node, Q.collector_node, id);
                     obj.Capacitors(end+1) = C_mu;
+                end
+                
+                if early
+                    R_o_id = sprintf('R_o_%s', Q.id);
+                    R_o = Resistor(R_o_id, Q.collector_node, Q.emitter_node, Q.r_o);
+                    obj.Resistors(end+1) = R_o;
                 end
 
                 obj.remove(Q); obj.update;

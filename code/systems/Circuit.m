@@ -114,18 +114,17 @@ classdef Circuit < Base_System
                         obj.Ideal_OpAmps(end+1) = Ideal_OpAmp(id, N1(i), N2(i), ...
                                                               str2double(arg3{i}));
                     case {'Q'}
-                        obj.BJTs(end+1) = BJT(id, N1(i), N2(i), str2double(arg3{i}), ...
-                                              arg4{i}, arg5{i}, arg6{i}, arg7{i});
+                        obj.BJTs(end+1) = BJT(id, N1(i), N2(i), str2double(arg3{i}), arg4{i});
                     case {'M'}
-                        obj.MOSFETs(end+1) = MOSFET(id, N1(i), N2(i), str2double(arg3{i}), ...
-                                                    arg4{i}, arg5{i}, arg6{i}, arg7{i});
+                        obj.MOSFETs(end+1) = MOSFET(id, N1(i), N2(i), ...
+                                                    str2double(arg3{i}), arg4{i});
                 end
             end
 
             % This creates compound element arrays and handles setup.
             obj.update();
         end
-        
+
         function export(obj, name)
         % Create a circuit file from the circuit object 
         % netlist in the current working directory.
@@ -279,29 +278,7 @@ classdef Circuit < Base_System
             obj.update;
             obj.reset;
         end
-    end
 
-    methods(Access = {?ELAB, ?Analyzer, ?Modeller, ?Transmuter, ?Visualizer})
-    % Methods only available to ELABorate modules.
-        
-        function connected = get_connected(obj, X, node)
-        % Get all the elements connected to given element X at given node.
-        
-            connected = [];
-            connected = [connected, Circuit.check_elem_array(obj.Indep_VSs, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.Indep_ISs, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.Resistors, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.Inductors, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.Capacitors, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.VCVSs, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.VCCSs, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.CCVSs, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.CCCSs, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.Ideal_OpAmps, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.BJTs, X, node)];
-            connected = [connected, Circuit.check_elem_array(obj.MOSFETs, X, node)];      
-        end
-        
         function remove(obj, X)
         % Remove X from circuit's element-arrays, without updating connections.
         
@@ -324,6 +301,28 @@ classdef Circuit < Base_System
             obj.update;
             obj.clean;
             obj.reset;
+        end
+    end
+
+    methods(Access = {?ELAB, ?Analyzer, ?Modeller, ?Transmuter, ?Visualizer})
+    % Methods only available to ELABorate modules.
+        
+        function connected = get_connected(obj, X, node)
+        % Get all the elements connected to given element X at given node.
+        
+            connected = [];
+            connected = [connected, Circuit.check_elem_array(obj.Indep_VSs, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.Indep_ISs, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.Resistors, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.Inductors, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.Capacitors, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.VCVSs, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.VCCSs, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.CCVSs, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.CCCSs, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.Ideal_OpAmps, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.BJTs, X, node)];
+            connected = [connected, Circuit.check_elem_array(obj.MOSFETs, X, node)];      
         end
         
         function update(obj)
