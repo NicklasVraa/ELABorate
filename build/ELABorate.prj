@@ -1,44 +1,32 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="1038188002" file="C:\Users\nkvra\Google_Drive\Documents\Projects\ELABorate\ELABorate.prj" location="C:\Users\nkvra\Google_Drive\Documents\Projects\ELABorate" name="ELABorate" target="target.toolbox" target-name="Package Toolbox">
+  <configuration file="C:\Users\Root\Downloads\ELABorate.prj" location="C:\Users\Root\Downloads" name="ELABorate" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>ELABorate</param.appname>
     <param.authnamewatermark>Nicklas Vraa</param.authnamewatermark>
-    <param.email>n.k.vraa@gmail.com</param.email>
+    <param.email>nkvraa@gmail.com</param.email>
     <param.company />
-    <param.summary>Give the program a netlist, and it will return the circuit equations.</param.summary>
-    <param.description>ELABorate is a circuit analysis tool capable of pure symbolic analysis, as well as partial or complete numerical evaluation. Written and run in MATLAB. ELABorate is geared towards circuit analysis and design, but has applications for any general system analysis, such as controller design.</param.description>
-    <param.screenshot>${PROJECT_ROOT}\resources\pictures\logo.png</param.screenshot>
+    <param.summary>Programmatic symbolic circuit analysis</param.summary>
+    <param.description>For programmatic symbolic circuit analysis in MATLAB</param.description>
+    <param.screenshot>${PROJECT_ROOT}\ELABorate\resource\logo.png</param.screenshot>
     <param.version>1.0</param.version>
     <param.output>${PROJECT_ROOT}\ELABorate.mltbx</param.output>
-    <param.products.name />
-    <param.products.id />
-    <param.products.version />
+    <param.products.name>
+      <item>MATLAB</item>
+      <item>Control System Toolbox</item>
+      <item>Symbolic Math Toolbox</item>
+    </param.products.name>
+    <param.products.id>
+      <item>1</item>
+      <item>3</item>
+      <item>15</item>
+    </param.products.id>
+    <param.products.version>
+      <item>9.12</item>
+      <item>10.11.1</item>
+      <item>9.1</item>
+    </param.products.version>
     <param.platforms />
-    <param.guid>8707300b-cd96-450a-baed-4baef354bdb7</param.guid>
-    <param.exclude.filters>% List files contained in your toolbox folder that you would like to exclude
-% from packaging.  Excludes should be listed relative to the toolbox folder.
-% Some examples of how to specify excludes are provided below:
-%
-% A single file in the toolbox folder:
-% .svn
-%
-% A single file in a subfolder of the toolbox folder:
-% example/.svn
-%
-% All files in a subfolder of the toolbox folder:
-% examples/*
-%
-% All files of a certain name in all subfolders of the toolbox folder:
-% **/.svn
-%
-% All files matching a pattern in all subfolders of the toolbox folder:
-% **/*.bak
-%
-README.md
-.git
-examples
-interface
-.gitignore
-resources/diagrams</param.exclude.filters>
+    <param.guid>658a2a8b-2753-4eb7-be9f-970e649cc64d</param.guid>
+    <param.exclude.filters />
     <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
     <param.examples />
     <param.demosxml />
@@ -66,15 +54,11 @@ resources/diagrams</param.exclude.filters>
     <param.additional.sw.mac.url />
     <param.additional.sw.linux.url />
     <unset>
-      <param.authnamewatermark />
-      <param.email />
       <param.company />
       <param.version />
       <param.output />
-      <param.products.name />
-      <param.products.id />
-      <param.products.version />
       <param.platforms />
+      <param.exclude.filters />
       <param.exclude.pcodedmfiles />
       <param.examples />
       <param.demosxml />
@@ -95,7 +79,6 @@ resources/diagrams</param.exclude.filters>
       <param.compatiblity.macos />
       <param.compatiblity.linux />
       <param.compatiblity.matlabonline />
-      <param.installation.map />
       <param.additional.sw.names />
       <param.additional.sw.licenses />
       <param.additional.sw.win.url />
@@ -103,41 +86,22 @@ resources/diagrams</param.exclude.filters>
       <param.additional.sw.linux.url />
     </unset>
     <fileset.rootdir>
-      <file>${PROJECT_ROOT}</file>
+      <file>${PROJECT_ROOT}\ELABorate</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}\code</file>
-      <file>${PROJECT_ROOT}\resources</file>
+      <file>${PROJECT_ROOT}\ELABorate\code</file>
+      <file>${PROJECT_ROOT}\ELABorate\resource</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
     <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="ELABorate.mltbx" optional="false">C:\Users\nkvra\Google_Drive\Documents\Projects\ELABorate\ELABorate.mltbx</file>
+      <file location="${PROJECT_ROOT}" name="ELABorate.mltbx" optional="false">C:\Users\Root\Downloads\ELABorate.mltbx</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2020a</root>
-      <toolboxes>
-        <toolbox name="matlabcoder" />
-        <toolbox name="fixedpoint" />
-        <toolbox name="matlabhdlcoder" />
-      </toolboxes>
-      <toolbox>
-        <matlabcoder>
-          <enabled>true</enabled>
-        </matlabcoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
-      </toolbox>
-      <toolbox>
-        <matlabhdlcoder>
-          <enabled>true</enabled>
-        </matlabhdlcoder>
-      </toolbox>
+      <root>C:\Program Files\MATLAB\R2022a</root>
+      <toolboxes />
     </matlab>
     <platform>
       <unix>false</unix>
