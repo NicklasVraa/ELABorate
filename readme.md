@@ -29,3 +29,6 @@ See more examples [here](https://github.com/NicklasVraa/ELABorate/blob/master/ex
 ### **Adding elements**
 To add an element, have the element class inherit from the `Element` class.
 Make sure to update the `Circuit` class, especially the functions relating to updating element arrays.
+
+---
+**LEGAL NOTICE**: This repository, including any and all of its forks and derivatives, may NOT be used in the development or training of any machine learning model of any kind, without the explicit permission of the owner of the original repository.
